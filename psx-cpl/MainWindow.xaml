@@ -1,0 +1,116 @@
+<Window x:Class="psx_cpl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:psx_cpl"
+        mc:Ignorable="d"
+        Icon="Images\x.png"
+        Title="psx control panel" Height="600" Width="400">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="BrushMainGrid" Color="#444"/>
+
+        <SolidColorBrush x:Key="BrushTextOnDark" Color="#FFCBE164"/>
+
+        <SolidColorBrush x:Key="BrushDNSServer" Color="Orange"/>
+        <SolidColorBrush x:Key="BrushElfLoader" Color="DeepPink"/>
+        <SolidColorBrush x:Key="BrushWebServer" Color="GreenYellow"/>
+        <SolidColorBrush x:Key="BrushOpenPayload" Color="Yellow"/>
+        <SolidColorBrush x:Key="BrushSendPayload" Color="DarkOrange"/>
+        
+        <SolidColorBrush x:Key="BrushOpenLog" Color="LightSeaGreen"/>
+        <SolidColorBrush x:Key="BrushConnectClient" Color="LightSalmon"/>
+        <SolidColorBrush x:Key="BrushInfo" Color="SpringGreen"/>
+        
+    </Window.Resources>
+
+
+    <Grid Background="{StaticResource BrushMainGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+
+            <StackPanel Orientation="Vertical">
+                <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">Your IP:</Label>
+                <ComboBox Width="150" Height="30" Name="comboBoxLocalIP" ItemsSource="{Binding LocalIPs}" SelectedIndex="0"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></ComboBox>
+                
+                <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">PS4 IP:</Label>
+                <TextBox Width="150" Height="30" Name="txtBoxPS4IP" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">255.255.255.255</TextBox>
+            </StackPanel>
+            
+            <StackPanel Orientation="Vertical">
+                <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">PS4 Port:</Label>
+                <TextBox Width="50" Name="txtBoxPS4Port" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold">5054</TextBox>
+                <TextBox Height="52" TextWrapping="Wrap" xml:space="preserve" HorizontalAlignment="Center"> Code Execution: 9023 &#x0a; Elfloader send to: 5054 &#x0a; Elfloader listen: 5088</TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical">
+                <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">HTML</Label>
+                <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">Scaling for</Label>
+                <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">directories</Label>
+                <TextBox Name="txtBoxCssScaling" Text="{Binding CssScaling}" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" TextChanged="txtBoxCssScaling_TextChanged" FontWeight="Bold"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+            <ToggleButton Name="btn_DNSServer" Width="70" Height="70" Background="{StaticResource BrushDNSServer}" Click="btn_DNSServer_Click" FontWeight="Bold" Margin="0,0,4,0" ToolTip="Start DNS Server on Port 53">
+                <StackPanel Orientation="Vertical" >
+                    <Label Name="btnDNSServerLabel1" HorizontalAlignment="Center">DNS</Label>
+                    <Label Name="btnDNSServerLabel2" HorizontalAlignment="Center">Start</Label>
+                </StackPanel>
+            </ToggleButton>
+
+            <ToggleButton Name="btn_WebServer" Width="70" Height="70" Background="{StaticResource BrushWebServer}" Click="btn_WebServer_Click" FontWeight="Bold" Margin="0,0,4,0" ToolTip="Start Web Server on Port 80">
+                <StackPanel Orientation="Vertical" >
+                    <Label Name="btnWebServerLabel1" HorizontalAlignment="Center">Web</Label>
+                    <Label Name="btnWebServerLabel2" HorizontalAlignment="Center">Start</Label>
+                </StackPanel>
+            </ToggleButton>
+
+            <ToggleButton Name="btn_ElfLoaderServer" Width="70" Height="70" Background="{StaticResource BrushElfLoader}" Click="btn_ElfLoaderServer_Click" FontWeight="Bold" Margin="0,0,4,0" ToolTip="Start Elf Loader Web on Port 5350">
+                <StackPanel Orientation="Vertical" >
+                    <Label Name="btnElfLoaderServerLabel1" HorizontalAlignment="Center">ElfLoader</Label>
+                    <Label Name="btnElfLoaderServerLabel2" HorizontalAlignment="Center">Start</Label>
+                </StackPanel>
+            </ToggleButton>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <ComboBox Width="60" Height="70" Name="ComboBoxFirmwareVersion" ItemsSource="{Binding Path=FirmwareVersions}" SelectedIndex="0" DropDownClosed="ComboBoxFirmwareVersion_DropDownClosed" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16" ></ComboBox>
+            <ComboBox Height="70" Name="ComboBoxPayLoad" ItemsSource="{Binding Path=Payloads}" SelectedIndex="0" VerticalContentAlignment="Center" DropDownClosed="ComboBoxPayLoad_DropDownClosed"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button x:Name="btn_OpenPayload" Width="70" Height="70" Background="{StaticResource BrushOpenPayload}" Click="btn_OpenPayload_Click">
+                <TextBlock Text="Open Payload" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button x:Name="btn_SendPayload" Width="70" Height="70" Background="{StaticResource BrushSendPayload}" Click="btn_SendPayload_Click" ToolTip="Send selected Payload to PS4 IP and Port configured above">
+                <TextBlock Text="Send Payload" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+
+            <Button x:Name="btn_OpenLogWindow" Width="70" Height="70" Background="{StaticResource BrushOpenLog}" Click="btn_OpenLogWindow_Click">
+                <TextBlock Text="Open Log" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+
+
+            <Button x:Name="btnConnectClient" Width="70" Height="70" Background="{StaticResource BrushConnectClient}" Click="btnConnectClient_Click">
+                <TextBlock Text="Connect Client" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+
+            <Button x:Name="btnInfo" Width="70" Height="70" Background="{StaticResource BrushInfo}" Click="btnInfo_Click">
+                <TextBlock Text="Info" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+
+        </StackPanel>
+        
+    </Grid>
+</Window>
