@@ -18,7 +18,7 @@ namespace psx_cpl
         {
             get
             {
-                if (tcpClient != null) return tcpClient.Connected;
+                if (tcpClient != null  && tcpClient.Client != null) return tcpClient.Connected;
                 else return false;
             }
         }
@@ -47,14 +47,15 @@ namespace psx_cpl
 
         public async Task Initialize(string ip, int port)
         {
-            if(tcpClient == null) tcpClient = new TcpClient();
+            tcpClient = new TcpClient();
+            
             if (!connecting)
             {
                 connecting = true;
                 try
                 {
                     await tcpClient.ConnectAsync(ip, port);
-
+                    connecting = false;
                     Console.WriteLine("Connected to: {0}:{1}", ip, port);
                 }
                 catch (Exception ex)
