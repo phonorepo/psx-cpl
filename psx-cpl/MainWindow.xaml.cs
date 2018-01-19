@@ -663,6 +663,7 @@ namespace psx_cpl
 
                     if (payload != null && payload.Length <= PayloadLimitByte)
                     {
+                        Instance.ComboBoxPayLoad.Text = "";
                         Instance.btn_SendPayload.IsEnabled = true;
                     }
                 }
@@ -729,7 +730,7 @@ namespace psx_cpl
         {
             try
             {
-                if (Instance.ComboBoxPayLoad != null && Instance.ComboBoxPayLoad.Items != null && Instance.ComboBoxPayLoad.Items.Count > 0)
+                if (Instance.ComboBoxPayLoad != null && Instance.ComboBoxPayLoad.Items != null && Instance.ComboBoxPayLoad.SelectedItem  != null && Instance.ComboBoxPayLoad.Items.Count > 0)
                 {
                     KeyValuePair<string, string> cbitem = (KeyValuePair<string, string>)Instance.ComboBoxPayLoad.SelectedItem;
                     string payloadfile = cbitem.Value;
