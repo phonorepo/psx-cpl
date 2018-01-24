@@ -69,6 +69,8 @@ namespace psx_cpl
                     LocalIPs = tempList.ToArray();
                     SelectedLocalIP = value;
                 }
+            }
+        }
             
         
 
