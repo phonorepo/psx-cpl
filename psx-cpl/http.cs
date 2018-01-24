@@ -33,31 +33,87 @@ namespace psx_cpl
             Console.WriteLine("rootPath: " + rootPath);
 
             this.RootPath = rootPath;
-            http = new HttpListener();
-            if (!ElfLoader)
-            {
-                MainWindow.AddToLogWeb("start serving as: http://localhost:" + port + "/");
-                http.Prefixes.Add("http://localhost:" + port + "/");
-            }
-            if (!ElfLoader)
-            {
-                MainWindow.AddToLogWeb("start serving as: http://127.0.0.1:" + port + "/");
-                http.Prefixes.Add("http://127.0.0.1:" + port + "/");
-            }
 
-            if (PrefixIPs != null && PrefixIPs.Length > 0)
-            {
-                foreach (string ip in PrefixIPs)
+                http = new HttpListener();
+                if (!ElfLoader)
                 {
-                    Console.WriteLine("Prefix-IP: " + ip);
-                    MainWindow.AddToLogWeb("start serving as: http://" + ip + ":" + port + "/");
-                    http.Prefixes.Add("http://" + ip + ":" + port + "/");
+                    MainWindow.AddToLogWeb("start serving as: http://localhost:" + port + "/");
+                    http.Prefixes.Add("http://localhost:" + port + "/");
+                }
+                if (!ElfLoader)
+                {
+                    MainWindow.AddToLogWeb("start serving as: http://127.0.0.1:" + port + "/");
+                    http.Prefixes.Add("http://127.0.0.1:" + port + "/");
+                }
+
+                if (PrefixIPs != null && PrefixIPs.Length > 0)
+                {
+                    foreach (string ip in PrefixIPs)
+                    {
+                        Console.WriteLine("Prefix-IP: " + ip);
+                        MainWindow.AddToLogWeb("start serving as: http://" + ip + ":" + port + "/");
+                        http.Prefixes.Add("http://" + ip + ":" + port + "/");
+                        //if (!ElfLoader) http.Prefixes.Add("https://" + ip + ":443/");
+                    }
+                }
+
+            try
+            {
+                http.Start();
+                if (ElfLoader) http.BeginGetContext(requestWaitELFloader, null);
+                else http.BeginGetContext(requestWait, null);
+            }
+            catch (System.Net.HttpListenerException he)
+            {
+                string error = MainWindow.ErrorTag + " There was a problem while starting the webserver, maybe a wrong IP was given, will try to get working IPs from the system instead: " + he.ToString();
+                Console.WriteLine(error);
+                MainWindow.AddToLogWeb(error);
+
+                http = new HttpListener();
+
+                string[] PrefixIPsNew = network.GetAllLocalIPv4();
+
+                if (!ElfLoader)
+                {
+                    MainWindow.AddToLogWeb("start serving as: http://localhost:" + port + "/");
+                    http.Prefixes.Add("http://localhost:" + port + "/");
+                }
+                if (!ElfLoader)
+                {
+                    MainWindow.AddToLogWeb("start serving as: http://127.0.0.1:" + port + "/");
+                    http.Prefixes.Add("http://127.0.0.1:" + port + "/");
+                }
+
+                if (PrefixIPsNew != null && PrefixIPsNew.Length > 0)
+                {
+                    foreach (string ip in PrefixIPsNew)
+                    {
+                        Console.WriteLine("Prefix-IP: " + ip);
+                        MainWindow.AddToLogWeb("start serving as: http://" + ip + ":" + port + "/");
+                        http.Prefixes.Add("http://" + ip + ":" + port + "/");
+                    }
+                }
+
+                try
+                {
+                    http.Start();
+                    if (ElfLoader) http.BeginGetContext(requestWaitELFloader, null);
+                    else http.BeginGetContext(requestWait, null);
+                }
+                catch (Exception ex)
+                {
+                    error = MainWindow.ErrorTag + " There was a problem while starting the webserver: " + ex.ToString();
+                    Console.WriteLine(error);
+                    MainWindow.AddToLogWeb(error);
                 }
             }
+            catch (Exception ex)
+            {
+                string error = MainWindow.ErrorTag + " There was a problem while starting the webserver: " + ex.ToString();
+                Console.WriteLine(error);
+                MainWindow.AddToLogWeb(error);
+            }
 
-            http.Start();
-            if(ElfLoader) http.BeginGetContext(requestWaitELFloader, null);
-            else http.BeginGetContext(requestWait, null);
         }
 
 
