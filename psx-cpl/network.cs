@@ -11,18 +11,25 @@ namespace psx_cpl
 {
     public static class network
     {
-        public static string[] GetAllLocalIPv4(NetworkInterfaceType _type)
+        public static string[] GetAllLocalIPv4(bool FilterByNetworkInterfaceyType = false, NetworkInterfaceType _type = NetworkInterfaceType.Ethernet)
         {
             List<string> ipAddrList = new List<string>();
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (item.NetworkInterfaceType == _type && item.OperationalStatus == OperationalStatus.Up)
+                if (item.OperationalStatus == OperationalStatus.Up)
                 {
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                    if (FilterByNetworkInterfaceyType == true && item.NetworkInterfaceType != _type)
                     {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                        //SKIP
+                    }
+                    else
+                    {
+                        foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
                         {
-                            ipAddrList.Add(ip.Address.ToString());
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                            {
+                                ipAddrList.Add(ip.Address.ToString());
+                            }
                         }
                     }
                 }
