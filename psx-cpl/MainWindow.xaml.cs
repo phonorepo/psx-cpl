@@ -493,7 +493,8 @@ namespace psx_cpl
             Console.WriteLine(InfoTag + " LoadLoacalIPs Start");
             try
             {
-                Instance.LocalIPs = network.GetAllLocalIPv4(System.Net.NetworkInformation.NetworkInterfaceType.Ethernet);
+                //Instance.LocalIPs = network.GetAllLocalIPv4(true, System.Net.NetworkInformation.NetworkInterfaceType.Ethernet); // filter only Ethernet
+                Instance.LocalIPs = network.GetAllLocalIPv4(); // return ALL IPs that are online
             }
             catch(Exception ex)
             {
@@ -553,7 +554,7 @@ namespace psx_cpl
         {
             if (webServer == null)
             {
-                webServer = new HttpFileServer(wwwRootPath, 80, network.GetAllLocalIPv4(System.Net.NetworkInformation.NetworkInterfaceType.Ethernet), false);
+                webServer = new HttpFileServer(wwwRootPath, 80, network.GetAllLocalIPv4(), false);
             }
         }
 
@@ -561,7 +562,7 @@ namespace psx_cpl
         {
             if (elfLoaderWebServer == null)
             {
-                elfLoaderWebServer = new HttpFileServer(wwwElfLoaderRootPath, 5350, network.GetAllLocalIPv4(System.Net.NetworkInformation.NetworkInterfaceType.Ethernet), true);
+                elfLoaderWebServer = new HttpFileServer(wwwElfLoaderRootPath, 5350, network.GetAllLocalIPv4(), true);
             }
         }
 
