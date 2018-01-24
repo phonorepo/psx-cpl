@@ -39,7 +39,7 @@
 
             <StackPanel Orientation="Vertical">
                 <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">Your IP:</Label>
-                <ComboBox Width="150" Height="30" Name="comboBoxLocalIP" ItemsSource="{Binding LocalIPs}" SelectedIndex="0"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></ComboBox>
+                <ComboBox Width="150" Height="30" Name="comboBoxLocalIP" IsEditable="True" ItemsSource="{Binding LocalIPs}" SelectedItem="{Binding SelectedLocalIP}" Text="{Binding NewLocalIP, UpdateSourceTrigger=LostFocus}"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></ComboBox>
                 
                 <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">PS4 IP:</Label>
                 <TextBox Width="150" Height="30" Name="txtBoxPS4IP" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">255.255.255.255</TextBox>
