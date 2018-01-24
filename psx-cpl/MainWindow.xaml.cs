@@ -41,6 +41,36 @@ namespace psx_cpl
             set { localIPs = value; OnPropertyChanged("LocalIPs"); }
         }
 
+        private string _selectedLocalIP;
+
+        public string SelectedLocalIP
+        {
+            get { return _selectedLocalIP; }
+            set
+            {
+                _selectedLocalIP = value;
+                OnPropertyChanged("SelectedLocalIP");
+            }
+        }
+        
+        public string NewLocalIP
+        {
+            set
+            {
+                if (SelectedLocalIP != null)
+                {
+                    return;
+                }
+                if (!string.IsNullOrEmpty(value))
+                {
+                    List<string> tempList = new List<string>();
+                    tempList.Add(value);
+                    if(LocalIPs != null && LocalIPs.Length > 0) tempList.AddRange(LocalIPs);
+                    LocalIPs = tempList.ToArray();
+                    SelectedLocalIP = value;
+                }
+            
+        
 
         public static FileInfo payload;
         public static int PayloadLimitByte = 10000000;
