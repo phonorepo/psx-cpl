@@ -103,10 +103,11 @@ namespace psx_cpl.Windows
             string ip = MainWindow.Instance.txtBoxPS4IP.Text;
             int EndpointPort = 5088; // Log Port
 
-            MainWindow.AddToLog("Trying to connect to PS4 (" + ip + ":" + EndpointPort + ")");
-
             if (MainWindow.client != null && !MainWindow.client.isConnected)
             {
+                MainWindow.AddToLog("Trying to connect to PS4 (" + ip + ":" + EndpointPort + ")");
+                if (MainWindow.Instance.btnConnectClient != null) MainWindow.Instance.btnConnectClient.IsEnabled = false;
+                if (btnConnectClient != null) btnConnectClient.IsEnabled = false;
                 MainWindow.client.StartRead(ip, EndpointPort);
             }
             else
