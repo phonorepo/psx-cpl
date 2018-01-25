@@ -560,6 +560,7 @@ namespace psx_cpl
                 }
 
                 UpdatePayloads();
+                UpdateSelectedPayload();
             }
         }
 
@@ -576,6 +577,21 @@ namespace psx_cpl
             }
         }
 
+        public static void UpdateSelectedPayload()
+        {
+            if (Instance.ComboBoxPayLoad != null && Instance.ComboBoxPayLoad.Items != null && Instance.ComboBoxPayLoad.SelectedItem != null && Instance.ComboBoxPayLoad.Items.Count > 0)
+            {
+                KeyValuePair<string, string> cbitem = (KeyValuePair<string, string>)Instance.ComboBoxPayLoad.SelectedItem;
+                string payloadfile = cbitem.Value;
+
+                if (payloadfile != null && File.Exists(payloadfile))
+                {
+                    payload = new FileInfo(payloadfile);
+                    Console.WriteLine(InfoTag + " ComboBoxPayLoad_SelectionChanged - payloadfile: " + payloadfile);
+                }
+
+            }
+        }
 
 
         /////
@@ -763,18 +779,7 @@ namespace psx_cpl
         {
             try
             {
-                if (Instance.ComboBoxPayLoad != null && Instance.ComboBoxPayLoad.Items != null && Instance.ComboBoxPayLoad.SelectedItem  != null && Instance.ComboBoxPayLoad.Items.Count > 0)
-                {
-                    KeyValuePair<string, string> cbitem = (KeyValuePair<string, string>)Instance.ComboBoxPayLoad.SelectedItem;
-                    string payloadfile = cbitem.Value;
-
-                    if (payloadfile != null && File.Exists(payloadfile))
-                    {
-                        payload = new FileInfo(payloadfile);
-                        Console.WriteLine(InfoTag + " ComboBoxPayLoad_SelectionChanged - payloadfile: " + payloadfile);
-                    }
-
-                }
+                UpdateSelectedPayload();
             }
             catch (Exception ex)
             {
