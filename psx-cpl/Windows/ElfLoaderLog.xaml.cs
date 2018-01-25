@@ -98,6 +98,22 @@ namespace psx_cpl.Windows
             this.Close();
         }
 
+        private void btnConnectClient_Click(object sender, RoutedEventArgs e)
+        {
+            string ip = MainWindow.Instance.txtBoxPS4IP.Text;
+            int EndpointPort = 5088; // Log Port
+
+            if (MainWindow.client != null && !MainWindow.client.isConnected)
+            {
+                MainWindow.client.StartRead(ip, EndpointPort);
+            }
+            else
+            {
+                MainWindow.AddToLog(MainWindow.ErrorTag + " btnConnectClient_Click - client is null or clinet is already connected");
+            }
+            MainWindow.OpenLogWindow();
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
             MainWindow.Instance.WindowLog = null;
