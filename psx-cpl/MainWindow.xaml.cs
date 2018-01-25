@@ -819,6 +819,8 @@ namespace psx_cpl
             string ip = Instance.txtBoxPS4IP.Text;
             int EndpointPort = 5088; // Log Port
 
+            AddToLog("Trying to connect to PS4 (" + ip + ":" + EndpointPort + ")");
+
             if (client != null && !client.isConnected)
             {
                 client.StartRead(ip, EndpointPort);
