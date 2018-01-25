@@ -57,11 +57,12 @@ namespace psx_cpl
                     await tcpClient.ConnectAsync(ip, port);
                     connecting = false;
                     Console.WriteLine("Connected to: {0}:{1}", ip, port);
+                    MainWindow.AddToLog("Connected to PS4 (" + ip + ":" + port + ")");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(MainWindow.ErrorTag + " Client Initialize: " + ex.ToString());
-
+                    MainWindow.AddToLog(MainWindow.ErrorTag + " Client Initialize: " + ex.Message);
                     MainWindow.Instance.mBox(MainWindow.ErrorTag + " Client Initialize: " + ex.Message);
                 }
             }
@@ -100,7 +101,8 @@ namespace psx_cpl
         public async Task Send(string PayloadFilePath)
         {
             Console.WriteLine(MainWindow.InfoTag + " Client Send PayloadFilePath: " + PayloadFilePath);
-
+            MainWindow.AddToLog(MainWindow.InfoTag + " Client Send PayloadFilePath: " + PayloadFilePath);
+            
             if (!String.IsNullOrEmpty(PayloadFilePath) && File.Exists(PayloadFilePath))
             {
 
@@ -116,6 +118,7 @@ namespace psx_cpl
                 catch (Exception ex)
                 {
                     Console.WriteLine(MainWindow.ErrorTag + " Client Send: " + ex.ToString());
+                    MainWindow.AddToLog(MainWindow.ErrorTag + " Client Send: " + ex.ToString());
                 }
             }
         }
