@@ -31,21 +31,21 @@ namespace psx_cpl
 
         public async void StartRead(string ip, int port)
         {
-            await Initialize(ip, port);
+            await Initialize(ip, port, 1);
             // Start reading task
             Task.Run(() => this.Read());
 
         }
         public async void StartSend(string ip, int port, string PayloadFilePath)
         {
-            await Initialize(ip, port);
+            await Initialize(ip, port, 2);
             // Start send task
             Task.Run(() => this.Send(PayloadFilePath));
 
         }
 
 
-        public async Task Initialize(string ip, int port)
+        public async Task Initialize(string ip, int port, int sendingButtonID = 0)
         {
             tcpClient = new TcpClient();
             
@@ -65,10 +65,29 @@ namespace psx_cpl
                     MainWindow.AddToLog(MainWindow.ErrorTag + " Client Initialize: " + ex.Message);
                     MainWindow.Instance.mBox(MainWindow.ErrorTag + " Client Initialize: " + ex.Message);
                 }
+                finally
+                {
+                    connecting = false;
+                    
+                    if (sendingButtonID > 0)
+                    {
+                        switch (sendingButtonID)
+                        {
+                            case 1:
+                                if(MainWindow.Instance.btnConnectClient != null) MainWindow.Instance.btnConnectClient.IsEnabled = true;
+                                if (MainWindow.Instance.WindowLog != null && MainWindow.Instance.WindowLog.btnConnectClient != null) MainWindow.Instance.WindowLog.btnConnectClient.IsEnabled = true;
+                                break;
+                            case 2:
+                                if (MainWindow.Instance.btn_SendPayload != null) MainWindow.Instance.btn_SendPayload.IsEnabled = true;
+                                break;
+                        }
+                    }
+                }
             }
             else
             {
                 Console.WriteLine(MainWindow.ErrorTag + " Client already connecting");
+                MainWindow.AddToLog(MainWindow.ErrorTag + " Client already connecting");
             }
         }
 
@@ -78,6 +97,7 @@ namespace psx_cpl
                 Task.Run(() => tcpClient.Close());
 
             Console.WriteLine(MainWindow.InfoTag + " Client Disconnected");
+            MainWindow.AddToLog(MainWindow.InfoTag + " Client Disconnected");
         }
 
         public async Task Read()
@@ -100,9 +120,7 @@ namespace psx_cpl
 
         public async Task Send(string PayloadFilePath)
         {
-            Console.WriteLine(MainWindow.InfoTag + " Client Send PayloadFilePath: " + PayloadFilePath);
-            MainWindow.AddToLog(MainWindow.InfoTag + " Client Send PayloadFilePath: " + PayloadFilePath);
-            
+
             if (!String.IsNullOrEmpty(PayloadFilePath) && File.Exists(PayloadFilePath))
             {
 
@@ -110,9 +128,13 @@ namespace psx_cpl
                 {
                     if (tcpClient != null && tcpClient.Connected == true)
                     {
+                        Console.WriteLine(MainWindow.InfoTag + " Client Send PayloadFilePath: " + PayloadFilePath);
+                        MainWindow.AddToLog(MainWindow.InfoTag + " Client Send PayloadFilePath: " + PayloadFilePath);
+
                         tcpClient.Client.SendFile(PayloadFilePath);
 
                         await Disconnect();
+                        MainWindow.Instance.btn_SendPayload.IsEnabled = true;
                     }
                 }
                 catch (Exception ex)
@@ -120,6 +142,15 @@ namespace psx_cpl
                     Console.WriteLine(MainWindow.ErrorTag + " Client Send: " + ex.ToString());
                     MainWindow.AddToLog(MainWindow.ErrorTag + " Client Send: " + ex.ToString());
                 }
+                finally
+                {
+                    MainWindow.Instance.btn_SendPayload.IsEnabled = true;
+                }
+            }
+            else
+            {
+                Console.WriteLine(MainWindow.ErrorTag + " PayloadFilePath was empty or doesnt exist: " + PayloadFilePath);
+                MainWindow.AddToLog(MainWindow.ErrorTag + " PayloadFilePath was empty or doesnt exist: " + PayloadFilePath);
             }
         }
     }
