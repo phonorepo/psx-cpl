@@ -35,6 +35,9 @@
         </TabControl>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="btnConnectClient" Margin="0,0,4,0" Width="70" Height="40" Click="btnConnectClient_Click">
+                <TextBlock Text="Connect to PS4" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
             <!--<Button Name="No" Width="60" Height="40" Margin="0,0,4,0" Tag="0" Click="Button_Click">No</Button>
             <Button Name="Yes" Width="60" Height="40" Margin="0,0,4,0" Tag="1" Click="Button_Click">Yes</Button>-->
             <Button Name="Cancel" Width="70" Height="40" Margin="0,0,4,0" IsCancel="True" IsDefault="True" Tag="4" Click="Button_Click">Cancel</Button>
