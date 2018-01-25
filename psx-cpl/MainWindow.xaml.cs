@@ -741,16 +741,17 @@ namespace psx_cpl
                 
                 if (clientPayload != null && !clientPayload.isConnected && EndpointPort > 0)
                 {
+                    AddToLog("Trying to send payload to PS4 (" + ip + ":" + EndpointPort + ")");
+                    MainWindow.Instance.btn_SendPayload.IsEnabled = false;
                     clientPayload.StartSend(ip, EndpointPort, payload.FullName);
                 }
                 else
                 {
                     AddToLog(ErrorTag + " btn_SendPayload_Click - clientPayload is null or clientPayload is already connected");
                 }
+                
                 OpenLogWindow();
-
             }
-            
         }
 
         private void btn_StartWebServer_Click(object sender, RoutedEventArgs e)
@@ -824,11 +825,14 @@ namespace psx_cpl
             string ip = Instance.txtBoxPS4IP.Text;
             int EndpointPort = 5088; // Log Port
 
-            AddToLog("Trying to connect to PS4 (" + ip + ":" + EndpointPort + ")");
-
             if (client != null && !client.isConnected)
             {
+                AddToLog("Trying to connect to PS4 (" + ip + ":" + EndpointPort + ")");
+                if (MainWindow.Instance.WindowLog != null && MainWindow.Instance.WindowLog.btnConnectClient != null) MainWindow.Instance.WindowLog.btnConnectClient.IsEnabled = false;
+                if (btnConnectClient != null) btnConnectClient.IsEnabled = false;
+
                 client.StartRead(ip, EndpointPort);
+                
             }
             else
             {
