@@ -772,6 +772,11 @@ namespace psx_cpl
         private void ComboBoxFirmwareVersion_DropDownClosed(object sender, EventArgs e)
         {
             Console.WriteLine(InfoTag + " ComboBoxFirmwareVersion_SelectionChanged");
+            if(txtBoxPS4Port != null && ComboBoxFirmwareVersion != null && !String.IsNullOrEmpty(ComboBoxFirmwareVersion.Text))
+            {
+                if (ComboBoxFirmwareVersion.Text == "1.76") txtBoxPS4Port.Text = "5054"; // if selected 1.76 as Firmwareversion set port to Elfloader port as default
+                if (ComboBoxFirmwareVersion.Text == "4.05") txtBoxPS4Port.Text = "9020"; // if selected 4.05 as Firmwareversion set port to IDC code exec port as default
+            }
             UpdateWebServerRoot();
             UpdatePayloads();
             UpdateSelectedPayload();
