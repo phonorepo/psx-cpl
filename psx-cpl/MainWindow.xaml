@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:psx_cpl"
         mc:Ignorable="d"
         Icon="Images\x.png"
-        Title="psx control panel" Height="600" Width="400">
+        Title="psx control panel" Height="600" Width="430">
 
     <Window.Resources>
         <SolidColorBrush x:Key="BrushMainGrid" Color="#444"/>
@@ -45,13 +45,13 @@
                 <TextBox Width="150" Height="30" Name="txtBoxPS4IP" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">255.255.255.255</TextBox>
             </StackPanel>
             
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Margin="4,0,0,0">
                 <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">PS4 Port:</Label>
                 <TextBox Width="50" Name="txtBoxPS4Port" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold">5054</TextBox>
-                <TextBox Height="52" TextWrapping="Wrap" xml:space="preserve" HorizontalAlignment="Center"> Code Execution: 9023 &#x0a; Elfloader send to: 5054 &#x0a; Elfloader listen: 5088</TextBox>
+                <TextBox Height="52" TextWrapping="Wrap" xml:space="preserve" HorizontalAlignment="Center"> Code Execution: 9023 &#x0a; Elfloader send to: 5054 &#x0a; Elfloader listen: 5088</TextBox><TextBox Height="70" TextWrapping="Wrap" xml:space="preserve" HorizontalAlignment="Center"> Code Execution IDC 4.05: 9020 &#x0a; Code Execution 1.76: 9023 &#x0a; Elfloader send to: 5054 &#x0a; Elfloader listen: 5088</TextBox>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Margin="4,0,0,0">
                 <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">HTML</Label>
                 <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">Scaling for</Label>
                 <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">directories</Label>
