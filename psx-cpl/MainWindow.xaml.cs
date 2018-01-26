@@ -774,6 +774,7 @@ namespace psx_cpl
             Console.WriteLine(InfoTag + " ComboBoxFirmwareVersion_SelectionChanged");
             UpdateWebServerRoot();
             UpdatePayloads();
+            UpdateSelectedPayload();
         }
 
         private void ComboBoxPayLoad_DropDownClosed(object sender, EventArgs e)
