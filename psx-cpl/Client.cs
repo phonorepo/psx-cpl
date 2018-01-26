@@ -134,7 +134,7 @@ namespace psx_cpl
                         tcpClient.Client.SendFile(PayloadFilePath);
 
                         await Disconnect();
-                        MainWindow.Instance.btn_SendPayload.IsEnabled = true;
+                        MainWindow.Instance.btn_SendPayload.Dispatcher.Invoke(new Action<Button>(btn => btn.IsEnabled = true));
                     }
                 }
                 catch (Exception ex)
@@ -144,7 +144,7 @@ namespace psx_cpl
                 }
                 finally
                 {
-                    MainWindow.Instance.btn_SendPayload.IsEnabled = true;
+                    MainWindow.Instance.btn_SendPayload.Dispatcher.Invoke(new Action<Button>(btn => btn.IsEnabled = true));
                 }
             }
             else
