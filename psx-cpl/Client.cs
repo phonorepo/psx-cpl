@@ -74,11 +74,11 @@ namespace psx_cpl
                         switch (sendingButtonID)
                         {
                             case 1:
-                                if(MainWindow.Instance.btnConnectClient != null) MainWindow.Instance.btnConnectClient.IsEnabled = true;
-                                if (MainWindow.Instance.WindowLog != null && MainWindow.Instance.WindowLog.btnConnectClient != null) MainWindow.Instance.WindowLog.btnConnectClient.IsEnabled = true;
+                                MainWindow.Enable_btnConnectClient();
+                                MainWindow.Enable_WindowLog_btnConnectClient();
                                 break;
                             case 2:
-                                if (MainWindow.Instance.btn_SendPayload != null) MainWindow.Instance.btn_SendPayload.IsEnabled = true;
+                                MainWindow.Enable_btn_SendPayload();
                                 break;
                         }
                     }
@@ -134,7 +134,7 @@ namespace psx_cpl
                         tcpClient.Client.SendFile(PayloadFilePath);
 
                         await Disconnect();
-                        MainWindow.Instance.btn_SendPayload.Dispatcher.Invoke(new Action<Button>(btn => btn.IsEnabled = true));
+                        MainWindow.Enable_btn_SendPayload();
                     }
                 }
                 catch (Exception ex)
@@ -144,7 +144,7 @@ namespace psx_cpl
                 }
                 finally
                 {
-                    MainWindow.Instance.btn_SendPayload.Dispatcher.Invoke(new Action<Button>(btn => btn.IsEnabled = true));
+                    MainWindow.Enable_btn_SendPayload();
                 }
             }
             else
