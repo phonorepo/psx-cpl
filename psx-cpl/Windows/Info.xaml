@@ -23,7 +23,7 @@
         <TabControl Grid.Row="1" Name="Tabs">
 
             <TabItem Header="DNS Log">
-                <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel">
+                <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
                     <ListBox  Name="TextLogDNS" ItemsSource="{Binding Path=Instance.LogDNS}" Width="Auto" Height="Auto" Background="LightGray" VerticalContentAlignment="Stretch">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
