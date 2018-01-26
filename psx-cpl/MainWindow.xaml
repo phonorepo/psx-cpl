@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:psx_cpl"
         mc:Ignorable="d"
         Icon="Images\x.png"
-        Title="psx control panel" Height="600" Width="430">
+        Title="psx control panel" Height="600" Width="440">
 
     <Window.Resources>
         <SolidColorBrush x:Key="BrushMainGrid" Color="#444"/>
@@ -98,16 +98,16 @@
             </Button>
 
             <Button x:Name="btn_OpenLogWindow" Width="70" Height="70" Background="{StaticResource BrushOpenLog}" Click="btn_OpenLogWindow_Click">
-                <TextBlock Text="Open Log" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock Text="Payload Logs" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
 
 
             <Button x:Name="btnConnectClient" Width="70" Height="70" Background="{StaticResource BrushConnectClient}" Click="btnConnectClient_Click">
-                <TextBlock Text="Connect Client" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock Text="Connect to PS4 Logs" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
 
             <Button x:Name="btnInfo" Width="70" Height="70" Background="{StaticResource BrushInfo}" Click="btnInfo_Click">
-                <TextBlock Text="Info" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock Text="Other Logs" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
 
         </StackPanel>
