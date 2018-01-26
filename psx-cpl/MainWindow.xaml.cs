@@ -370,6 +370,95 @@ namespace psx_cpl
         }
 
 
+        /// <summary>
+        /// Enable/Disable Controls
+        /// </summary>
+        /// 
+        public static void Disable_btn_SendPayload()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null && MainWindow.Instance.btn_SendPayload != null)
+                {
+                    MainWindow.Instance.btn_SendPayload.IsEnabled = false;
+                }
+
+            }));
+        }
+
+        public static void Enable_btn_SendPayload()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null && MainWindow.Instance.btn_SendPayload != null)
+                {
+                    MainWindow.Instance.btn_SendPayload.IsEnabled = true;
+                }
+
+            }));
+        }
+
+        public static void Disable_btnConnectClient()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null && MainWindow.Instance.btnConnectClient != null)
+                {
+                    MainWindow.Instance.btnConnectClient.IsEnabled = false;
+                }
+
+            }));
+        }
+
+        public static void Enable_btnConnectClient()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null && MainWindow.Instance.btnConnectClient != null)
+                {
+                    MainWindow.Instance.btnConnectClient.IsEnabled = true;
+                }
+
+            }));
+        }
+
+        public static void Disable_WindowLog_btnConnectClient()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null && MainWindow.Instance.WindowLog != null && MainWindow.Instance.WindowLog.btnConnectClient != null)
+                {
+                    MainWindow.Instance.WindowLog.btnConnectClient.IsEnabled = false;
+                }
+
+            }));
+        }
+
+        public static void Enable_WindowLog_btnConnectClient()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null && MainWindow.Instance.WindowLog != null && MainWindow.Instance.WindowLog.btnConnectClient != null)
+                {
+                    MainWindow.Instance.WindowLog.btnConnectClient.IsEnabled = true;
+                }
+
+            }));
+        }
+
+
         public MainWindow()
         {
             instance = this;
