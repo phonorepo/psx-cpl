@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:psx_cpl"
         mc:Ignorable="d"
         Icon="Images\x.png"
-        Title="psx control panel" Height="600" Width="440">
+        Title="psx control panel" Height="600" Width="450">
 
     <Window.Resources>
         <SolidColorBrush x:Key="BrushMainGrid" Color="#444"/>
@@ -101,9 +101,9 @@
                 <TextBlock Text="Payload Logs" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
 
-
+<!-- fixme: remove hardcoded elfloader log port, add port field to be able to change to ftp log port or similar -->
             <Button x:Name="btnConnectClient" Width="70" Height="70" Background="{StaticResource BrushConnectClient}" Click="btnConnectClient_Click">
-                <TextBlock Text="Connect to PS4 Logs" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock Text="Connect to PS4 elfloader Logs" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
 
             <Button x:Name="btnInfo" Width="70" Height="70" Background="{StaticResource BrushInfo}" Click="btnInfo_Click">
