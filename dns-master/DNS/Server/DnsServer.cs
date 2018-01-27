@@ -36,6 +36,19 @@ namespace DNS.Server {
             set { localonly = value; }
         }
 
+        private bool redirectUnknownToLocal = false;
+        public bool RedirectUnknownToLocal
+        {
+            get { return redirectUnknownToLocal; }
+            set { redirectUnknownToLocal = value; }
+        }
+
+        private string localIP;
+        public string LocalIP
+        {
+            get { return localIP; }
+            set { localIP = value; }
+        }
 
         public DnsServer(IPEndPoint endServer)
         {
@@ -48,7 +61,7 @@ namespace DNS.Server {
 
         public DnsServer(IPAddress endServer, int port = DEFAULT_PORT) : this(new IPEndPoint(endServer, port)) {}
         public DnsServer(string endServerIp, int port = DEFAULT_PORT) : this(IPAddress.Parse(endServerIp), port) {}
-        public DnsServer(string endServerIp, bool localOnly, int port = DEFAULT_PORT) : this(IPAddress.Parse(endServerIp), port) { LocalOnly = localOnly; }
+        public DnsServer(string endServerIp, bool localOnly, bool RedirectUnknownRequestsToLocal, int port = DEFAULT_PORT) : this(IPAddress.Parse(endServerIp), port) { LocalOnly = localOnly; RedirectUnknownToLocal = RedirectUnknownRequestsToLocal; }
 
         public async Task Stop()
         {
@@ -85,7 +98,7 @@ namespace DNS.Server {
                 try {
                     result = await udp.ReceiveAsync();
                 }
-                catch (ObjectDisposedException e) { OnErrored(e); }
+                catch (ObjectDisposedException e) { /*OnErrored(e);*/ }
                 catch (SocketException e) {
                     OnErrored(e);
                     continue;
@@ -128,6 +141,19 @@ namespace DNS.Server {
                     Merge(response.AnswerRecords, answers);
                 } else {
                    if(!LocalOnly) return await ResolveRemote(request);
+                   else if(RedirectUnknownToLocal && question.Type == RecordType.A)
+                    {
+                        IPAddress answerIP;
+                        IPAddress.TryParse(LocalIP, out answerIP);
+
+                        if (answerIP != null)
+                        {
+                            IList<IResourceRecord> entries = new List<IResourceRecord>();
+                            IResourceRecord fakeResponse = new IPAddressResourceRecord(request.Questions[0].Name, answerIP);
+                            entries.Add(fakeResponse);
+                            Merge(response.AnswerRecords, entries);
+                        }
+                    }
                 }
             }
 
@@ -165,10 +191,10 @@ namespace DNS.Server {
                     .WithCancellationTimeout(UDP_TIMEOUT);
             }
             catch (SocketException e) { OnErrored(e); }
-            catch (ArgumentException e) { OnErrored(e); }
+            catch (ArgumentException e) { /*OnErrored(e);*/ }
             catch (OperationCanceledException e) { OnErrored(e); }
             catch (IOException e) { OnErrored(e); }
-            catch (ObjectDisposedException e) { OnErrored(e); }
+            catch (ObjectDisposedException e) { /*OnErrored(e);*/ }
             catch (ResponseException e) {
                 IResponse response = e.Response;
 
