@@ -10,13 +10,14 @@ namespace psx_cpl
 {
     public static class dns
     {
-        public async static Task DNSAsync(string[] Domains, string[] localIPs, List<string>BlackList)
+        public async static Task DNSAsync(string[] Domains, string localIP, List<string>BlackList)
         {
             if (localIPs != null && localIPs.Length > 0)
             {
                 // if one wants to use a remote DNS server for requests that cannot be solved:
                 // DnsServer server = new DnsServer("8.8.8.8");
-                DnsServer server = new DnsServer("0.0.0.0", true);
+                DnsServer server = new DnsServer("0.0.0.0", true, true);
+                server.LocalIP = localIP;
                 MainWindow.dnsServerList.Add(server);
 
                 if(BlackList != null && BlackList.Count > 0)
@@ -29,20 +30,17 @@ namespace psx_cpl
                     }
                 }
                 
-                foreach (string localIP in localIPs)
+                Console.WriteLine(MainWindow.InfoTag + " DNSAsync localIP: " + localIP);
+
+                foreach (string domain in Domains)
                 {
-
-                    Console.WriteLine(MainWindow.InfoTag + " DNSAsync localIP: " + localIP);
-
-                    foreach (string domain in Domains)
-                    {
-                        Console.WriteLine();
-                        MainWindow.AddToLogDNS(String.Format(MainWindow.InfoTag + " Redirecting {0} to " + localIP, domain));
-                        server.MasterFile.AddIPAddressResourceRecord(domain, localIP);
-                    }
+                    Console.WriteLine();
+                    MainWindow.AddToLogDNS(String.Format(MainWindow.InfoTag + " Redirecting {0} to " + localIP, domain));
+                    server.MasterFile.AddIPAddressResourceRecord(domain, localIP);
                 }
 
-                server.Responded += (request, response) => MainWindow.AddToLogDNS(String.Format("{0} => {1}", request, response));
+                //server.Responded += (request, response) => MainWindow.AddToLogDNS(String.Format("{0} => {1}", request, response));
+                server.Responded += (request, response) => MainWindow.AddToLogDNS(String.Format("{0} => {1}", DNS.Protocol.Utils.ObjectStringifier.Stringify(request.Questions), DNS.Protocol.Utils.ObjectStringifier.Stringify(response.AnswerRecords)));
                 server.Errored += (e) =>
                 {
                     Console.WriteLine(MainWindow.ErrorTag + ": {0}", e);
