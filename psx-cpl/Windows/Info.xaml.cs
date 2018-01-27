@@ -73,5 +73,53 @@ namespace psx_cpl.Windows
         {
             MainWindow.Instance.WindowInfo = null;
         }
+        
+                private void btnClearDNSLog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.ClearLogDNS();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(MainWindow.ErrorTag + " btnClearDNSLog_Click: " + ex.ToString());
+            }
+        }
+
+        private void btnClearWebLog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.ClearLogWeb();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(MainWindow.ErrorTag + " btnClearWebLog_Click: " + ex.ToString());
+            }
+        }
+
+        private void btnCopyDNSLog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.CopyLogDNSToClipboard();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(MainWindow.ErrorTag + " btnCopyDNSLog_Click: " + ex.ToString());
+            }
+        }
+
+        private void btnCopyWebLog_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.CopyLogWebToClipboard();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(MainWindow.ErrorTag + " btnCopyWebLog_Click: " + ex.ToString());
+            }
+        }
     }
 }
