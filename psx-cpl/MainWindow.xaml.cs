@@ -616,6 +616,21 @@ namespace psx_cpl
             {
                 //Instance.LocalIPs = network.GetAllLocalIPv4(true, System.Net.NetworkInformation.NetworkInterfaceType.Ethernet); // filter only Ethernet
                 Instance.LocalIPs = network.GetAllLocalIPv4(); // return ALL IPs that are online
+                if(Instance.LocalIPs != null && Instance.LocalIPs.Length > 0)
+                {
+                    if(Instance.txtBoxPS4IP != null && !String.IsNullOrEmpty(Instance.txtBoxPS4IP.Text) && Instance.txtBoxPS4IP.Text.Count(x => x == '.') == 3)
+                    {
+                        string[] ipArray = Instance.txtBoxPS4IP.Text.Split('.');
+                        if (ipArray != null && ipArray.Length > 3)
+                        {
+                            string TryToGuessNetwork = ipArray[0] + "." + ipArray[1] + "." + ipArray[2] + ".";
+                            foreach (string ip in Instance.LocalIPs)
+                            {
+                                if (ip.StartsWith(TryToGuessNetwork)) Instance.SelectedLocalIP = ip;
+                            }
+                        }
+                    }
+                }
             }
             catch(Exception ex)
             {
