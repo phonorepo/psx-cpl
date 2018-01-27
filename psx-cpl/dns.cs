@@ -12,7 +12,7 @@ namespace psx_cpl
     {
         public async static Task DNSAsync(string[] Domains, string localIP, List<string>BlackList)
         {
-            if (localIPs != null && localIPs.Length > 0)
+            if (!String.IsNullOrEmpty(localIP))
             {
                 // if one wants to use a remote DNS server for requests that cannot be solved:
                 // DnsServer server = new DnsServer("8.8.8.8");
