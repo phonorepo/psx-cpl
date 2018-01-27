@@ -24,18 +24,29 @@
 
             <TabItem Header="DNS Log">
                 <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
-                    <ListBox  Name="TextLogDNS" ItemsSource="{Binding Path=Instance.LogDNS}" Width="Auto" Height="Auto" Background="LightGray" VerticalContentAlignment="Stretch">
+                        <DockPanel LastChildFill="True">
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                            <Button Width="70" Height="20" Name="btnClearDNSLog" Click="btnClearDNSLog_Click">Clear</Button>
+                            <Button Width="70" Height="20" Name="btnCopyDNSLog" Click="btnCopyDNSLog_Click">Copy</Button>
+                        </StackPanel>
+                        <ListBox  Name="TextLogDNS" ItemsSource="{Binding Path=Instance.LogDNS}" Width="Auto" Height="Auto" Background="LightGray" VerticalContentAlignment="Stretch">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Height" Value="Auto" />
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
+                    </DockPanel>
                 </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Web Log">
                 <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel">
+                <DockPanel LastChildFill="True">
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                <Button Width="70" Height="20" Name="btnClearWebLog" Click="btnClearWebLog_Click">Clear</Button>
+                            <Button Width="70" Height="20" Name="btnCopyWebLog" Click="btnCopyWebLog_Click">Copy</Button>
+                        </StackPanel>                        
                     <ListBox  Name="TextLogWeb" ItemsSource="{Binding Path=Instance.LogWeb}" Width="Auto" Height="Auto" Background="LightGray" VerticalContentAlignment="Stretch">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
@@ -43,6 +54,7 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
+                    </DockPanel>
                 </ScrollViewer>
             </TabItem>
 
