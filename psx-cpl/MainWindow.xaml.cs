@@ -255,6 +255,20 @@ namespace psx_cpl
             }));
         }
 
+        public static void CopyLogToClipboard()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null)
+                {
+                    if (MainWindow.Instance.Log != null) Clipboard.SetText(string.Join(Environment.NewLine, MainWindow.Instance.Log));
+                }
+
+            }));
+        }
+
         public static void ClearLog()
         {
             System.Windows.Application.Current.Dispatcher.Invoke(
@@ -304,6 +318,20 @@ namespace psx_cpl
             }));
         }
 
+        public static void CopyLogDNSToClipboard()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null)
+                {
+                    if (MainWindow.Instance.LogDNS != null) Clipboard.SetText(string.Join(Environment.NewLine, MainWindow.Instance.LogDNS));
+                }
+
+            }));
+        }
+
         public static void ClearLogDNS()
         {
             System.Windows.Application.Current.Dispatcher.Invoke(
@@ -338,6 +366,20 @@ namespace psx_cpl
                 {
                     if (MainWindow.Instance.LogWeb == null) MainWindow.Instance.LogWeb = new ObservableCollection<string>();
                     MainWindow.Instance.LogWeb.Add(Text);
+                }
+
+            }));
+        }
+
+        public static void CopyLogWebToClipboard()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null)
+                {
+                    if (MainWindow.Instance.LogWeb != null) Clipboard.SetText(string.Join(Environment.NewLine,MainWindow.Instance.LogWeb));
                 }
 
             }));
@@ -765,7 +807,8 @@ namespace psx_cpl
                     DNSstarted = true;
                     if (Instance.comboBoxLocalIP != null && !string.IsNullOrEmpty(Instance.comboBoxLocalIP.Text))
                     {
-                        string[] ip = new string[] { Instance.comboBoxLocalIP.Text };
+                        //string[] ip = new string[] { Instance.comboBoxLocalIP.Text };
+                        string ip = Instance.comboBoxLocalIP.Text;
                         Console.WriteLine(InfoTag + " StartDNS: Trying to start redirecting requests to selected IP: " + ip);
                         await dns.DNSAsync(Instance.DomainsToRedirect, ip, DnsBlackList);
                     }
@@ -957,12 +1000,18 @@ namespace psx_cpl
 
             if (tButton.IsChecked ?? false)
             {
-                tButton.BorderThickness = new Thickness(4, 4, 4, 4);
-                tButton.Padding = new Thickness(4, 4, 4, 4);
-                btnDNSServerLabel2.Content = "Stop";
-
-                StartDNS();
-                if (Instance.comboBoxLocalIP != null) Instance.comboBoxLocalIP.IsEnabled = false;
+                if (Instance.comboBoxLocalIP != null && !string.IsNullOrEmpty(Instance.comboBoxLocalIP.Text))
+                {
+                    tButton.BorderThickness = new Thickness(4, 4, 4, 4);
+                    tButton.Padding = new Thickness(4, 4, 4, 4);
+                    btnDNSServerLabel2.Content = "Stop";
+                    StartDNS();
+                    Instance.comboBoxLocalIP.IsEnabled = false;
+                }
+                else if(string.IsNullOrEmpty(Instance.comboBoxLocalIP.Text))
+                {
+                    MessageBox.Show(ErrorTag + " Couldn't get your local IP from the dropdown.");
+                }
             }
             else
             {
