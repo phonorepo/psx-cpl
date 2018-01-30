@@ -33,6 +33,9 @@ namespace psx_cpl
             get { return instance; }
         }
 
+        public static string ErrorTag = "[ERROR]";
+        public static string InfoTag = "[INFO]";
+        public static string NL = Environment.NewLine;
 
         private string[] localIPs;
         public string[] LocalIPs
@@ -129,14 +132,26 @@ namespace psx_cpl
             }
         }
 
-        
+
 
 
 
         /// <summary>
         /// Configs
         /// </summary>
+        private static string configFile;
+        public static string ConfigFile
+        {
+            get { return configFile; }
+            set { configFile = value; }
+        }
 
+        private Settings appSettings;
+        public Settings AppSettings
+        {
+            get { return appSettings; }
+            set { appSettings = value; OnPropertyChanged("AppSettings"); }
+        }
         public static string FirmwareVersionsFilePath
         {
             get { return Path.Combine(AppDir, "config", "firmwareversions.txt"); }
@@ -152,6 +167,14 @@ namespace psx_cpl
             set { firmwareVersions = value; OnPropertyChanged("FirmwareVersions"); }
         }
 
+        public int LastFirmware
+        {
+            get
+            {
+                if (FirmwareVersions != null && FirmwareVersions.Count > 0) return (FirmwareVersions.Count - 1);
+                else return 0;
+            }
+        }
 
 
         public static FileInfo DomainsToRedirectFile;
@@ -206,19 +229,6 @@ namespace psx_cpl
                     return payloads;
                 }
             }
-        }
-
-
-        public static string ErrorTag = "[ERROR]";
-        public static string InfoTag = "[INFO]";
-        public static string NL = Environment.NewLine;
-
-
-        private Windows.Info windowInfo;
-        public Windows.Info WindowInfo
-        {
-            get { return windowInfo; }
-            set { windowInfo = value; OnPropertyChanged("WindowInfo"); }
         }
 
 
@@ -397,8 +407,65 @@ namespace psx_cpl
 
 
         /// <summary>
+        /// Log ProxyDump
+        /// </summary>
+
+        private ObservableCollection<string> logProxyDump;
+        public ObservableCollection<string> LogProxyDump
+        {
+            get { return logProxyDump; }
+            set { logProxyDump = value; OnPropertyChanged("LogProxyDump"); }
+        }
+
+        public static void AddToLogProxyDump(string Text)
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null)
+                {
+                    if (MainWindow.Instance.LogProxyDump == null) MainWindow.Instance.LogProxyDump = new ObservableCollection<string>();
+                    MainWindow.Instance.LogProxyDump.Add(Text);
+                }
+
+            }));
+        }
+
+        public static void CopyLogProxyDumpToClipboard()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null)
+                {
+                    if (MainWindow.Instance.LogProxyDump != null) Clipboard.SetText(string.Join(Environment.NewLine, MainWindow.Instance.LogProxyDump));
+                }
+
+            }));
+        }
+
+        public static void ClearLogProxyDump()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (MainWindow.Instance != null && MainWindow.Instance.LogProxyDump != null) MainWindow.Instance.LogProxyDump.Clear();
+            }));
+        }
+
+
+        /// <summary>
         /// Info Window
         /// </summary>
+        private Windows.Info windowInfo;
+        public Windows.Info WindowInfo
+        {
+            get { return windowInfo; }
+            set { windowInfo = value; OnPropertyChanged("WindowInfo"); }
+        }
 
         public static void OpenInfoWindow()
         {
@@ -408,6 +475,63 @@ namespace psx_cpl
             {
                 if (Instance.WindowInfo == null) Instance.WindowInfo = new Windows.Info();
                 Instance.WindowInfo.Show();
+            }));
+        }
+
+
+        /// <summary>
+        /// ProxyDump Window
+        /// </summary>
+        private int proxyPort = 8877;
+        public int ProxyPort
+        {
+            get { return proxyPort; }
+            set { proxyPort = value; OnPropertyChanged("ProxyPort"); }
+        }
+
+        private Windows.ProxyDumpWindow windowProxyDump;
+        public Windows.ProxyDumpWindow WindowProxyDump
+        {
+            get { return windowProxyDump; }
+            set { windowProxyDump = value; OnPropertyChanged("WindowProxyDump"); }
+        }
+
+        public static void OpenProxyDumpWindow()
+        {
+            Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (Instance.WindowProxyDump == null) Instance.WindowProxyDump = new Windows.ProxyDumpWindow();
+                Instance.WindowProxyDump.Show();
+            }));
+        }
+
+        private psx_cpl.ProxyDump.ProxyDump proxyDumpInstance;
+        public psx_cpl.ProxyDump.ProxyDump ProxyDumpInstance
+        {
+            get { return proxyDumpInstance; }
+            set { proxyDumpInstance = value; OnPropertyChanged("ProxyDumpInstance"); }
+        }
+
+        /// <summary>
+        /// Settings Window
+        /// </summary>
+        private Windows.Settings windowSettings;
+        public Windows.Settings WindowSettings
+        {
+            get { return windowSettings; }
+            set { windowSettings = value; OnPropertyChanged("WindowSettings"); }
+        }
+
+        public static void OpenSettingsWindow()
+        {
+            Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (Instance.WindowInfo == null) Instance.WindowSettings = new Windows.Settings();
+                Instance.WindowSettings.Show();
             }));
         }
 
@@ -525,6 +649,17 @@ namespace psx_cpl
 
             Initialize();
 
+            if (AppDomain.CurrentDomain.SetupInformation.ConfigurationFile != null)
+            {
+                MainWindow.ConfigFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            }
+
+            //Load Settings when Whindow is loaded ...
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadSettings();
         }
 
 
@@ -562,6 +697,23 @@ namespace psx_cpl
 
         }
 
+
+        public void LoadSettings()
+        {
+            AppSettings = new Settings();
+            AppSettings.LoadSettings();
+
+            if (AppSettings != null)
+            {
+                if (AppSettings.OpenLogAfterStart) OpenInfoWindow();
+                if (AppSettings.OpenElfloaderLogAfterStart) OpenLogWindow();
+                if (AppSettings.OpenProxyDumpAfterStart) OpenProxyDumpWindow();
+                if (AppSettings.UseLocalIP && !String.IsNullOrEmpty(AppSettings.LocalIP)) comboBoxLocalIP.Text = AppSettings.LocalIP;
+                if (AppSettings.ProxyDumpUsePort && AppSettings.ProxyDumpPort >= 0) ProxyPort = AppSettings.ProxyDumpPort;
+                if (MainWindow.Instance.ProxyDumpInstance != null && AppSettings.ProxyDumpUseDefaultResponseFile) MainWindow.Instance.ProxyDumpInstance.LoadResponseFile();
+                if (MainWindow.Instance.ProxyDumpInstance != null && AppSettings.ProxyDumpSplitSessions) MainWindow.Instance.ProxyDumpInstance.SplitSessionsFiles = AppSettings.ProxyDumpSplitSessions;
+            }
+        }
 
         public static void LoadFirmwareVersions()
         {
@@ -1072,5 +1224,16 @@ namespace psx_cpl
         {
             OpenInfoWindow();
         }
+
+        private void btn_OpenProxyDump_Click(object sender, RoutedEventArgs e)
+        {
+            OpenProxyDumpWindow();
+        }
+
+        private void btn_OpenSettings_Click(object sender, RoutedEventArgs e)
+        {
+            OpenSettingsWindow();
+        }
+
     }
 }

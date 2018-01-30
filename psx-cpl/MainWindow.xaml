@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:psx_cpl"
         mc:Ignorable="d"
         Icon="Images\x.png"
-        Title="psx control panel" Height="600" Width="450">
+        Title="psx control panel" Height="600" Width="450" Loaded="Window_Loaded">
 
     <Window.Resources>
         <SolidColorBrush x:Key="BrushMainGrid" Color="#444"/>
@@ -22,7 +22,9 @@
         <SolidColorBrush x:Key="BrushOpenLog" Color="LightSeaGreen"/>
         <SolidColorBrush x:Key="BrushConnectClient" Color="LightSalmon"/>
         <SolidColorBrush x:Key="BrushInfo" Color="SpringGreen"/>
-        
+        <SolidColorBrush x:Key="BrushProxyDump" Color="Indigo"/>
+        <SolidColorBrush x:Key="BrushSettings" Color="CornflowerBlue"/>
+
     </Window.Resources>
 
 
@@ -111,6 +113,15 @@
             </Button>
 
         </StackPanel>
-        
+
+        <StackPanel Orientation="Horizontal" Grid.Row="4">
+            <Button x:Name="btn_OpenProxyDump" Width="70" Height="70" Background="{StaticResource BrushProxyDump}" Click="btn_OpenProxyDump_Click">
+                <TextBlock Text="ProxyDump" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button x:Name="btn_OpenSettings" Width="70" Height="70" Background="{StaticResource BrushSettings}" Click="btn_OpenSettings_Click">
+                <TextBlock Text="Settings" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+        </StackPanel>
+
     </Grid>
 </Window>

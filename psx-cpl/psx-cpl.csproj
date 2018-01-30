@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SAZ_SUPPORT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -40,7 +40,16 @@
     <ApplicationIcon>Images\x.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FiddlerCore4, Version=4.4.8.4, Culture=neutral, PublicKeyToken=67cb91587178ac5a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ProxyDump\FiddlerCore4.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.5, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ProxyDump\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -62,14 +71,24 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Client.cs" />
+    <Compile Include="converter.cs" />
     <Compile Include="dns.cs" />
     <Compile Include="network.cs" />
     <Compile Include="http.cs" />
+    <Compile Include="ProxyDump\ProxyDump.cs" />
+    <Compile Include="ProxyDump\SAZ-DOTNETZIP.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Windows\Info.xaml.cs">
       <DependentUpon>Info.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ElfLoaderLog.xaml.cs">
       <DependentUpon>ElfLoaderLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProxyDumpWindow.xaml.cs">
+      <DependentUpon>ProxyDumpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -90,6 +109,14 @@
     <Page Include="Windows\ElfLoaderLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProxyDumpWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +161,23 @@
     </None>
     <Resource Include="Images\x.png" />
     <Resource Include="Images\x.ico" />
+    <Content Include="makecert.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProxyDump\FiddlerCore.dll" />
+    <Content Include="ProxyDump\FiddlerCore4.dll" />
+    <Resource Include="ProxyDump\FiddlerCore4.XML" />
+    <Content Include="ProxyDump\Ionic.Zip.Reduced.dll" />
+    <None Include="ProxyDump\licenses\FiddlerCore.license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ProxyDump\licenses\Ionic.Zip.Reduced.license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Resource Include="ProxyDump\README.txt" />
+    <Resource Include="responses\urifilter.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="www\1.76\hello.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

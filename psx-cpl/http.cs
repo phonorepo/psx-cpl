@@ -2,11 +2,6 @@
 original source by Frank Quednau: https://gist.github.com/flq/369432
 */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-
 namespace psx_cpl
 {
     using System;
@@ -150,6 +145,17 @@ namespace psx_cpl
                 {
                     FilePathWithoutParams = fullPath.Remove(index, (fullPath.Length - index));
                     Console.WriteLine("[INFO] requestWait FilePathWithoutParams: " + FilePathWithoutParams);
+                }
+                else if (fullPath.StartsWith(@"document\") && MainWindow.Instance.AppSettings.HTTPGuideUseDefaultFile)
+                {
+                    if (File.Exists(MainWindow.Instance.AppSettings.HTTPGuideDefaultFile))
+                    {
+                        returnFile(c, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile);
+                    }
+                    if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile)))
+                    {
+                        returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile));
+                    }
                 }
 
                 returnFile(c, FilePathWithoutParams);
