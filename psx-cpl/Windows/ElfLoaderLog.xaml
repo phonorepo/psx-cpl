@@ -14,15 +14,10 @@
             <RowDefinition Height="80"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid.Resources>
-            <local:EnumarableToTextConverter x:Key="EnumarableToTextConverter" />
-        </Grid.Resources>
-<!--
-        <TextBox Name="TextBox" Grid.Row="1" Padding="2" Text="{Binding Path=Instance.Log, Mode=OneWay, Converter={StaticResource EnumarableToTextConverter}}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="WrapWithOverflow" />
--->
+
         <TabControl Grid.Row="1" Name="Tabs">
             <TabItem Header="Log">
-                <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel">
+                <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
                     <ListBox  Name="Text" ItemsSource="{Binding Path=Instance.Log}" Width="Auto" Height="Auto" Background="LightGray" VerticalContentAlignment="Stretch">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">

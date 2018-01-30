@@ -1,25 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace psx_cpl.Windows
 {
-    public partial class ElfLoaderLog : Window, INotifyPropertyChanged
+    public partial class Settings : Window, INotifyPropertyChanged
     {
-        public ElfLoaderLog()
+        public Settings()
         {
             InitializeComponent();
             DataContext = MainWindow.Instance;
@@ -44,7 +32,8 @@ namespace psx_cpl.Windows
         {
             get { return _value; }
         }
-        
+
+
         private void ListViewScrollViewer_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             ScrollViewer scv = (ScrollViewer)sender;
@@ -69,28 +58,24 @@ namespace psx_cpl.Windows
             this.Close();
         }
 
-        private void btnConnectClient_Click(object sender, RoutedEventArgs e)
-        {
-            string ip = MainWindow.Instance.txtBoxPS4IP.Text;
-            int EndpointPort = 5088; // Log Port
-
-            if (MainWindow.client != null && !MainWindow.client.isConnected)
-            {
-                MainWindow.AddToLog("Trying to connect to PS4 (" + ip + ":" + EndpointPort + ")");
-                if (MainWindow.Instance.btnConnectClient != null) MainWindow.Instance.btnConnectClient.IsEnabled = false;
-                if (btnConnectClient != null) btnConnectClient.IsEnabled = false;
-                MainWindow.client.StartRead(ip, EndpointPort);
-            }
-            else
-            {
-                MainWindow.AddToLog(MainWindow.ErrorTag + " btnConnectClient_Click - client is null or clinet is already connected");
-            }
-            MainWindow.OpenLogWindow();
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
-            MainWindow.Instance.WindowLog = null;
+            MainWindow.Instance.WindowInfo = null;
+        }
+
+         private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.AppSettings.Save();
+        }
+
+        private void Defaults_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.AppSettings.LoadDefaultSettings();
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Instance.LoadSettings();
         }
     }
 }
