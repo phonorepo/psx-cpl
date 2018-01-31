@@ -174,10 +174,10 @@
     <None Include="ProxyDump\licenses\Ionic.Zip.Reduced.license.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Resource Include="ProxyDump\README.txt" />
-    <Resource Include="responses\urifilter.txt">
+    <None Include="ProxyDump\README.txt" />
+    <None Include="responses\urifilter.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
     <Content Include="www\1.76\hello.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

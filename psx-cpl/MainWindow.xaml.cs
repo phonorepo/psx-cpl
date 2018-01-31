@@ -700,7 +700,7 @@ namespace psx_cpl
 
         public void LoadSettings()
         {
-            AppSettings = new Settings();
+            if (AppSettings == null) AppSettings = new Settings();
             AppSettings.LoadSettings();
 
             if (AppSettings != null)
@@ -712,6 +712,11 @@ namespace psx_cpl
                 if (AppSettings.ProxyDumpUsePort && AppSettings.ProxyDumpPort >= 0) ProxyPort = AppSettings.ProxyDumpPort;
                 if (MainWindow.Instance.ProxyDumpInstance != null && AppSettings.ProxyDumpUseDefaultResponseFile) MainWindow.Instance.ProxyDumpInstance.LoadResponseFile();
                 if (MainWindow.Instance.ProxyDumpInstance != null && AppSettings.ProxyDumpSplitSessions) MainWindow.Instance.ProxyDumpInstance.SplitSessionsFiles = AppSettings.ProxyDumpSplitSessions;
+
+                if (AppSettings.PS4UseDefaultPort && AppSettings.PS4DefaultPort >= 0) txtBoxPS4Port.Text = AppSettings.PS4DefaultPort.ToString();
+
+                if (AppSettings.PayloadUseDefaultFile && File.Exists(AppSettings.PayloadDefaultFile)) UseCustomPayload(AppSettings.PayloadDefaultFile);
+
             }
         }
 
@@ -891,6 +896,29 @@ namespace psx_cpl
             }
         }
 
+        public static void UseCustomPayload(string CustomPayloadFilePath)
+        {
+            if (Instance.ComboBoxPayLoad != null && Instance.ComboBoxPayLoad.Items != null && Instance.ComboBoxPayLoad.Items.Count > 0)
+            {
+                if (CustomPayloadFilePath != null && File.Exists(CustomPayloadFilePath))
+                {
+                    payload = new FileInfo(CustomPayloadFilePath);
+                    Console.WriteLine(InfoTag + " UseCustomPayload - payloadfile: " + CustomPayloadFilePath);
+
+                    Instance.ComboBoxPayLoad.ItemsSource = Payloads;
+                    Instance.ComboBoxPayLoad.DisplayMemberPath = "Value";
+
+                    if (payloads != null)
+                    {
+                        var newItem = new KeyValuePair<string, string>("0.0", CustomPayloadFilePath);
+                        payloads.Add(newItem);
+                        ComboBoxItem item = (ComboBoxItem)Instance.ComboBoxPayLoad.ItemContainerGenerator.ContainerFromItem(newItem);
+                        Instance.ComboBoxPayLoad.SelectedItem = item;
+                    }
+                }
+
+            }
+        }
 
         /////
         /// WebServer
@@ -900,7 +928,16 @@ namespace psx_cpl
         {
             if (webServer == null)
             {
-                webServer = new HttpFileServer(wwwRootPath, 80, network.GetAllLocalIPv4(), false);
+                if (Instance.AppSettings != null && Instance.AppSettings.HTTPUseDefaultPort && Instance.AppSettings.HTTPDefaultPort > 0)
+                {
+                    if (Instance.LocalIPs != null && Instance.LocalIPs.Length > 0) webServer = new HttpFileServer(wwwRootPath, Instance.AppSettings.HTTPDefaultPort, Instance.LocalIPs, false);
+                    else webServer = new HttpFileServer(wwwRootPath, Instance.AppSettings.HTTPDefaultPort, network.GetAllLocalIPv4(), false);
+                }
+                else
+                {
+                    if (Instance.LocalIPs != null && Instance.LocalIPs.Length > 0) webServer = new HttpFileServer(wwwRootPath, 80, Instance.LocalIPs, false);
+                    else webServer = new HttpFileServer(wwwRootPath, 80, network.GetAllLocalIPv4(), false);
+                }
             }
         }
 
@@ -908,7 +945,16 @@ namespace psx_cpl
         {
             if (elfLoaderWebServer == null)
             {
-                elfLoaderWebServer = new HttpFileServer(wwwElfLoaderRootPath, 5350, network.GetAllLocalIPv4(), true);
+                if (Instance.AppSettings != null && Instance.AppSettings.HTTPElfloaderUseDefaultPort && Instance.AppSettings.HTTPElfloaderDefaultPort > 0)
+                {
+                    if (Instance.LocalIPs != null && Instance.LocalIPs.Length > 0) elfLoaderWebServer = new HttpFileServer(wwwElfLoaderRootPath, Instance.AppSettings.HTTPElfloaderDefaultPort, Instance.LocalIPs, true);
+                    else elfLoaderWebServer = new HttpFileServer(wwwElfLoaderRootPath, Instance.AppSettings.HTTPElfloaderDefaultPort, network.GetAllLocalIPv4(), true);
+                }
+                else
+                {
+                    if (Instance.LocalIPs != null && Instance.LocalIPs.Length > 0) elfLoaderWebServer = new HttpFileServer(wwwElfLoaderRootPath, 5350, Instance.LocalIPs, true);
+                    else elfLoaderWebServer = new HttpFileServer(wwwElfLoaderRootPath, 5350, network.GetAllLocalIPv4(), true);
+                }
             }
         }
 
@@ -1071,7 +1117,7 @@ namespace psx_cpl
         private void ComboBoxFirmwareVersion_DropDownClosed(object sender, EventArgs e)
         {
             Console.WriteLine(InfoTag + " ComboBoxFirmwareVersion_SelectionChanged");
-            if(txtBoxPS4Port != null && ComboBoxFirmwareVersion != null && !String.IsNullOrEmpty(ComboBoxFirmwareVersion.Text))
+            if (AppSettings != null && AppSettings.GeneralSwitchPS4PortWithFirmwareVersion && !AppSettings.PS4UseDefaultPort && txtBoxPS4Port != null && ComboBoxFirmwareVersion != null && !String.IsNullOrEmpty(ComboBoxFirmwareVersion.Text))
             {
                 if (ComboBoxFirmwareVersion.Text == "1.76") txtBoxPS4Port.Text = "5054"; // if selected 1.76 as Firmwareversion set port to Elfloader port as default
                 if (ComboBoxFirmwareVersion.Text == "4.05") txtBoxPS4Port.Text = "9020"; // if selected 4.05 as Firmwareversion set port to IDC code exec port as default

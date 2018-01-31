@@ -1,7 +1,87 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="psx_cpl.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="httpDefaultFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">idc\index.html</Value>
+    </Setting>
+    <Setting Name="httpDefaultPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="httpElfloaderDefaultPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5350</Value>
+    </Setting>
+    <Setting Name="httpElfloaderDefaultFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">elfloader\index.html</Value>
+    </Setting>
+    <Setting Name="httpElfloaderUseDefaultFile" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="httpHTMLScaling" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="ps4IP" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.0.4</Value>
+    </Setting>
+    <Setting Name="dnsLocalOnly" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="dnsForwardServer" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.0.1</Value>
+    </Setting>
+    <Setting Name="ps4DefaultPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">9020</Value>
+    </Setting>
+    <Setting Name="ps4UseDefaultPort" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="localIP" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.0.3</Value>
+    </Setting>
+    <Setting Name="useLocalIP" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="payloadDefaultFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ps4hen.bin</Value>
+    </Setting>
+    <Setting Name="payloadUseDefaultFile" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="openLogAfterStart" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="openElfloaderLogAfterStart" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="openProxyDumpAfterStart" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="proxyDumpDefaultRepsonseFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">default_session.saz</Value>
+    </Setting>
+    <Setting Name="proxyDumpUseDefaultResponseFile" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="proxyDumpPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">8080</Value>
+    </Setting>
+    <Setting Name="httpUseDefaultFile" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="httpUseDefaultPort" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="httpElfloaderUseDefaultPort" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="proxyDumpUsePort" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="proxyDumpSplitSessions" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="generalSwitchPS4PortWithFirmwareVersion" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

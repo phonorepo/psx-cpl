@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +21,7 @@ namespace psx_cpl.Windows
 {
     public partial class ProxyDumpWindow : Window, INotifyPropertyChanged
     {
+
         public ProxyDumpWindow()
         {
             InitializeComponent();
@@ -53,7 +56,7 @@ namespace psx_cpl.Windows
         {
             get { return _value; }
         }
-        
+
         private void ListViewScrollViewer_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             ScrollViewer scv = (ScrollViewer)sender;
@@ -85,7 +88,7 @@ namespace psx_cpl.Windows
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.Instance.ProxyDumpInstance != null) MainWindow.Instance.ProxyDumpInstance.Start(MainWindow.Instance.ProxyDumpInstance.FCSF);
+            if (MainWindow.Instance.ProxyDumpInstance != null && MainWindow.Instance.ProxyPort >= 0) MainWindow.Instance.ProxyDumpInstance.Start(MainWindow.Instance.ProxyDumpInstance.FCSF, MainWindow.Instance.ProxyPort);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
@@ -136,7 +139,7 @@ namespace psx_cpl.Windows
                 tButton.BorderThickness = new Thickness(1, 1, 1, 1);
                 tButton.Padding = new Thickness(0, 0, 0, 0);
                 //btnToggleDumpModeLabel2.Content = "Start";
-                MainWindow.Instance.ProxyDumpInstance.DumpMode = false;
+                if (MainWindow.Instance.ProxyDumpInstance != null) MainWindow.Instance.ProxyDumpInstance.DumpMode = false;
             }
         }
 
@@ -148,6 +151,35 @@ namespace psx_cpl.Windows
         private void btnUninstallRootCert_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.Instance.ProxyDumpInstance != null) MainWindow.Instance.ProxyDumpInstance.UninstallCertificate();
+        }
+
+        public void SaveUriFilter()
+        {
+            try
+            {
+                if (MainWindow.Instance.ProxyDumpInstance != null && MainWindow.Instance.ProxyDumpInstance.URIFilterList != null && MainWindow.Instance.ProxyDumpInstance.URIFilterList.Count > 0)
+                {
+                    string LinesToSave = Regex.Replace(MainWindow.Instance.ProxyDumpInstance.URIFilterListAsString, @"^\s+$[\r\n]*", "", RegexOptions.Multiline);
+
+                    File.WriteAllText(MainWindow.Instance.ProxyDumpInstance.URIFilterFilePath, LinesToSave);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void btnProxyDumpSaveUriFilter_Click(object sender, RoutedEventArgs e)
+        {
+            SaveUriFilter();
+        }
+
+        private void tabProxyDumpUriFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            tabProxyDumpUriFilter.Focus();
+            UpdateLayout();
+            tbProxyDumpUriFilter.Focus();
         }
     }
 }

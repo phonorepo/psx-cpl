@@ -63,9 +63,10 @@ namespace psx_cpl.Windows
             MainWindow.Instance.WindowInfo = null;
         }
 
-         private void Save_Click(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.AppSettings.Save();
+            MainWindow.Instance.LoadSettings();
         }
 
         private void Defaults_Click(object sender, RoutedEventArgs e)

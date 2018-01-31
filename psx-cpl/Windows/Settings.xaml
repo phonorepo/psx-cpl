@@ -41,28 +41,129 @@
                             <TextBox Name="txtBoxGeneralLocalIP" Text="{Binding Path=AppSettings.LocalIP, Mode=TwoWay}"></TextBox>
                         </StackPanel>
 
+                        <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" Name="checkBoxGeneralGeneralSwitchPS4PortWithFirmwareVersion" IsChecked="{Binding Path=AppSettings.GeneralSwitchPS4PortWithFirmwareVersion, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                            <Label>Switch PS4 Port when switching firmware version</Label>
+                        </StackPanel>
+
                     </Grid>
                 </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Web Server">
-                    <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
-                        
-                        
-                    </ScrollViewer>
+                <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Name="lblWebServerCol1" Grid.Row="0"  Grid.Column="0" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Enabled</Label>
+                        <Label Name="lblWebServerCol2" Grid.Row="0"  Grid.Column="1" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Setting</Label>
+
+                        <CheckBox Grid.Row="1" Grid.Column="0" Margin="10" Name="checkBoxWebServerPort" IsChecked="{Binding Path=AppSettings.HTTPUseDefaultPort, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                            <Label>Port</Label>
+                            <TextBox Name="tBoxWebServerPort" Text="{Binding Path=AppSettings.HTTPDefaultPort, Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" Name="checkBoxHTTPUseDefaultFile" IsChecked="{Binding Path=AppSettings.HTTPUseDefaultFile, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                            <Label>Playstation Default File to open (c:\www\index.html or relative to current fw RootPath)</Label>
+                            <TextBox Name="tBoxHTTPDefaultFile" Text="{Binding Path=AppSettings.HTTPDefaultFile, Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+
+
+                        <CheckBox Grid.Row="3" Grid.Column="0" Margin="10" Name="checkBoxHTTPElfloaderDefaultPort" IsChecked="{Binding Path=AppSettings.HTTPElfloaderUseDefaultPort, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+                            <Label>Elfloader Web Server Port</Label>
+                            <TextBox Name="tBoxHTTPElfloaderDefaultPort" Text="{Binding Path=AppSettings.HTTPElfloaderDefaultPort, Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="4" Grid.Column="0" Margin="10" Name="checkBoxHTTPElfloaderUseDefaultFile" IsChecked="{Binding Path=AppSettings.HTTPElfloaderUseDefaultFile, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical">
+                            <Label>Elfloader Default File to open (c:\www\index.html or relative to current fw RootPath)</Label>
+                            <TextBox Name="tBoxHTTPElfloaderDefaultFile" Text="{Binding Path=AppSettings.HTTPElfloaderDefaultFile, Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="DNS Server">
                 <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel">
-                    
-                    
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Name="lblDNSServerCol1" Grid.Row="0"  Grid.Column="0" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Enabled</Label>
+                        <Label Name="lblDNSServerCol2" Grid.Row="0"  Grid.Column="1" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Setting</Label>
+
+                        <CheckBox Grid.Row="1" Grid.Column="0" Margin="10" Name="checkBoxDNSServerLocalOnly" IsChecked="{Binding Path=AppSettings.DNSLocalOnly, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                            <Label>Do not use forwarding DNS server</Label>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                            <Label>Forwarding DNS Server (enter IP) for unknown entries</Label>
+                            <TextBox Name="tBoxDNSServerDNSForwardServer" Text="{Binding Path=AppSettings.DNSForwardServer, Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+
+                    </Grid>
+
                 </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Payload">
                 <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel">
-                    
-                    
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Label Name="lblPayloadCol1" Grid.Row="0"  Grid.Column="0" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Enabled</Label>
+                        <Label Name="lblPayloadCol2" Grid.Row="0"  Grid.Column="1" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Setting</Label>
+
+                        <CheckBox Grid.Row="1" Grid.Column="0" Margin="10" Name="checkBoxPayloadPS4UseDefaultPort" IsChecked="{Binding Path=AppSettings.PS4UseDefaultPort, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                            <Label>PS4 Default Port for Payloads</Label>
+                            <TextBox Name="tBoxPayloadPS4DefaultPort" Text="{Binding Path=AppSettings.PS4DefaultPort, Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" Name="checkBoxPayloadPayloadUseDefaultFile" IsChecked="{Binding Path=AppSettings.PayloadUseDefaultFile, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                            <Label>PS4 Default Payload to send</Label>
+                            <TextBox Name="tBoxPayloadPayloadDefaultFile" Text="{Binding Path=AppSettings.PayloadDefaultFile, Mode=TwoWay}"></TextBox>
+                        </StackPanel>
+
+                    </Grid>
+
                 </ScrollViewer>
             </TabItem>
 
@@ -96,6 +197,11 @@
                             <TextBox Name="txtBoxProxyDumpDefaultResponseFile" Text="{Binding Path=AppSettings.ProxyDumpDefaultRepsonseFile, Mode=TwoWay}"></TextBox>
                         </StackPanel>
 
+                        <CheckBox Grid.Row="3" Grid.Column="0" Margin="10" Name="checkBoxProxyDumpSplitSessions" IsChecked="{Binding Path=AppSettings.ProxyDumpSplitSessions, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+                            <Label>Split sessions in seperate files</Label>
+                        </StackPanel>
+
                     </Grid>
 
                 </ScrollViewer>
@@ -124,6 +230,16 @@
                             <Label>OpenLogAfterStart</Label>
                         </StackPanel>
 
+                        <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenElfloaderLogAfterStart" IsChecked="{Binding Path=AppSettings.OpenElfloaderLogAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                            <Label>OpenElfloaderLogAfterStart</Label>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="3" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenProxyDumpAfterStart" IsChecked="{Binding Path=AppSettings.OpenProxyDumpAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+                            <Label>OpenProxyDumpAfterStart</Label>
+                        </StackPanel>
+
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -134,9 +250,9 @@
             <!--<Button Name="No" Width="60" Height="40" Margin="0,0,4,0" Tag="0" Click="Button_Click">No</Button>
             <Button Name="Yes" Width="60" Height="40" Margin="0,0,4,0" Tag="1" Click="Button_Click">Yes</Button>-->
             <Button Name="Defaults" Width="70" Height="40" Margin="0,0,4,0" Click="Defaults_Click">Defaults</Button>
-            <Button Name="Apply" Width="70" Height="40" Margin="0,0,4,0" Click="Apply_Click">Apply</Button>
+            <!--<Button Name="Apply" Width="70" Height="40" Margin="0,0,4,0" Click="Apply_Click">Apply</Button>-->
             <Button Name="Save" Width="70" Height="40" Margin="0,0,4,0" Click="Save_Click">Save</Button>
-            <Button Name="Cancel" Width="70" Height="40" Margin="0,0,4,0" IsCancel="True" IsDefault="True" Tag="4" Click="Button_Click">Close</Button>
+            <Button Name="Cancel" Width="70" Height="40" Margin="0,0,4,0" IsCancel="True" Tag="4" Click="Button_Click">Close</Button>
             <!-- <Button Name="OK" Width="60" Height="40" Margin="0,0,4,0" Tag="5" Click="Button_Click">OK</Button> -->
         </StackPanel>
     </Grid>

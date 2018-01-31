@@ -20,6 +20,7 @@ using System.Threading;
 using System.Reflection;
 using System.IO;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace psx_cpl.ProxyDump
 {
@@ -69,6 +70,20 @@ namespace psx_cpl.ProxyDump
         {
             get { return uriFilterList; }
             set { uriFilterList = value; OnPropertyChanged("uriFilterList"); }
+        }
+
+        public string URIFilterListAsString
+        {
+            get { return string.Join(Environment.NewLine, URIFilterList); }
+            set
+            {
+                if (URIFilterList == null) URIFilterList = new List<string>();
+                else URIFilterList.Clear();
+                //URIFilterList.AddRange(value.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+                URIFilterList.AddRange(value.Split(new string[] { Environment.NewLine }, StringSplitOptions.None));
+                //URIFilterList.AddRange(Regex.Split(value, Environment.NewLine));
+                OnPropertyChanged("URIFilterListAsString");
+            }
         }
 
         private string currentResponseFile;
@@ -889,6 +904,7 @@ namespace psx_cpl.ProxyDump
                     Fiddler.FiddlerApplication.Startup(ProxyPort, Flag);
                     WriteCommandResponse(MainWindow.InfoTag + " Proxy Port: " + ProxyPort);
                     WriteCommandResponse(MainWindow.InfoTag + " Response File: " + CurrentResponseFile);
+                    WriteCommandResponse(MainWindow.InfoTag + " URI Filter active: " + URIFilterListAsString);
 
                     if (fiddlermessages) FiddlerApplication.Log.LogString("Starting with settings: [" + Flag + "]");
                     if (fiddlermessages) FiddlerApplication.Log.LogString("Using Gateway: " + ((CONFIG.bForwardToGateway) ? "TRUE" : "FALSE"));

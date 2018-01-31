@@ -132,7 +132,20 @@ namespace psx_cpl
 
             Console.WriteLine("[INFO] requestWait fullPath: " + fullPath);
 
-            if (Directory.Exists(fullPath))
+            if (MainWindow.Instance.AppSettings.HTTPGuideUseDefaultFile)
+            {
+                if (File.Exists(MainWindow.Instance.AppSettings.HTTPGuideDefaultFile))
+                {
+                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPGuideDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
+                    returnFile(c, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile);
+                }
+                if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile)))
+                {
+                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
+                    returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile));
+                }
+            }
+            else if (Directory.Exists(fullPath))
                 returnDirContents(c, fullPath);
             else if (File.Exists(fullPath))
                 returnFile(c, fullPath);
@@ -145,17 +158,6 @@ namespace psx_cpl
                 {
                     FilePathWithoutParams = fullPath.Remove(index, (fullPath.Length - index));
                     Console.WriteLine("[INFO] requestWait FilePathWithoutParams: " + FilePathWithoutParams);
-                }
-                else if (fullPath.StartsWith(@"document\") && MainWindow.Instance.AppSettings.HTTPGuideUseDefaultFile)
-                {
-                    if (File.Exists(MainWindow.Instance.AppSettings.HTTPGuideDefaultFile))
-                    {
-                        returnFile(c, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile);
-                    }
-                    if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile)))
-                    {
-                        returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile));
-                    }
                 }
 
                 returnFile(c, FilePathWithoutParams);
@@ -182,7 +184,20 @@ namespace psx_cpl
 
             Console.WriteLine("[INFO] requestWaitELFloader fullPath: " + fullPath);
 
-            if (Directory.Exists(fullPath))
+            if (MainWindow.Instance.AppSettings.HTTPElfloaderUseDefaultFile)
+            {
+                if (File.Exists(MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile))
+                {
+                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
+                    returnFile(c, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile);
+                }
+                if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile)))
+                {
+                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
+                    returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile));
+                }
+            }
+            else if (Directory.Exists(fullPath))
                 returnDirContents(c, fullPath);
             else if (File.Exists(fullPath))
             {

@@ -47,18 +47,18 @@ namespace psx_cpl
 
         //httpSettings
 
-        private string httpGuideDefaultFile;
-        public string HTTPGuideDefaultFile
+        private string httpDefaultFile;
+        public string HTTPDefaultFile
         {
-            get { return httpGuideDefaultFile; }
-            set { httpGuideDefaultFile = value; OnPropertyChanged("HTTPGuideDefaultFile"); }
+            get { return httpDefaultFile; }
+            set { httpDefaultFile = value; OnPropertyChanged("HTTPDefaultFile"); }
         }
 
-        private bool httpGuideUseDefaultFile;
-        public bool HTTPGuideUseDefaultFile
+        private bool httpUseDefaultFile;
+        public bool HTTPUseDefaultFile
         {
-            get { return httpGuideUseDefaultFile; }
-            set { httpGuideUseDefaultFile = value; OnPropertyChanged("HTTPGuideUseDefaultFile"); }
+            get { return httpUseDefaultFile; }
+            set { httpUseDefaultFile = value; OnPropertyChanged("HTTPUseDefaultFile"); }
         }
 
         private int httpDefaultPort;
@@ -220,7 +220,14 @@ namespace psx_cpl
             set { openProxyDumpAfterStart = value; OnPropertyChanged("OpenProxyDumpAfterStart"); }
         }
 
+        // General Settings
 
+        private bool generalSwitchPS4PortWithFirmwareVersion;
+        public bool GeneralSwitchPS4PortWithFirmwareVersion
+        {
+            get { return generalSwitchPS4PortWithFirmwareVersion; }
+            set { generalSwitchPS4PortWithFirmwareVersion = value; OnPropertyChanged("GeneralSwitchPS4PortWithFirmwareVersion"); }
+        }
 
 
         /// <summary>
@@ -251,8 +258,8 @@ namespace psx_cpl
         {
             try
             {
-                if (SettingExist("httpGuideDefaultFile")) HTTPGuideDefaultFile = Properties.Settings.Default.httpGuideDefaultFile;
-                if (SettingExist("httpGuideUseDefaultFile")) HTTPGuideUseDefaultFile = Properties.Settings.Default.httpGuideUseDefaultFile;
+                if (SettingExist("httpDefaultFile")) HTTPDefaultFile = Properties.Settings.Default.httpDefaultFile;
+                if (SettingExist("httpUseDefaultFile")) HTTPUseDefaultFile = Properties.Settings.Default.httpUseDefaultFile;
 
                 if (SettingExist("httpDefaultPort")) HTTPDefaultPort = Properties.Settings.Default.httpDefaultPort;
                 if (SettingExist("httpUseDefaultPort")) HTTPUseDefaultPort = Properties.Settings.Default.httpUseDefaultPort;
@@ -286,6 +293,7 @@ namespace psx_cpl
                 if (SettingExist("proxyDumpPort")) ProxyDumpPort = Properties.Settings.Default.proxyDumpPort;
                 if (SettingExist("proxyDumpUsePort")) ProxyDumpUsePort = Properties.Settings.Default.proxyDumpUsePort;
                 if (SettingExist("proxyDumpSplitSessions")) ProxyDumpSplitSessions = Properties.Settings.Default.proxyDumpSplitSessions;
+                if (SettingExist("generalSwitchPS4PortWithFirmwareVersion")) GeneralSwitchPS4PortWithFirmwareVersion = Properties.Settings.Default.generalSwitchPS4PortWithFirmwareVersion;
 
             }
             catch (Exception ex)
@@ -330,10 +338,10 @@ namespace psx_cpl
             {
                 if (ConfigurationManager.AppSettings != null && ConfigurationManager.AppSettings.AllKeys.Length > 0)
                 {
-                    //var httpGuideUseDefaultFile = Convert.ToBoolean(ConfigurationManager.AppSettings["httpGuideUseDefaultFile"]);
+                    //var httpUseDefaultFile = Convert.ToBoolean(ConfigurationManager.AppSettings["httpUseDefaultFile"]);
 
-                    if (AppSettingExist("httpGuideDefaultFile")) HTTPGuideDefaultFile = AppSettings.Get<string>("httpGuideDefaultFile");
-                    if (AppSettingExist("httpGuideUseDefaultFile")) HTTPGuideUseDefaultFile = AppSettings.Get<bool>("httpGuideUseDefaultFile");
+                    if (AppSettingExist("httpDefaultFile")) HTTPDefaultFile = AppSettings.Get<string>("httpDefaultFile");
+                    if (AppSettingExist("httpUseDefaultFile")) HTTPUseDefaultFile = AppSettings.Get<bool>("httpUseDefaultFile");
 
                     if (AppSettingExist("httpDefaultPort")) HTTPDefaultPort = AppSettings.Get<int>("httpDefaultPort");
                     if (AppSettingExist("httpUseDefaultPort")) HTTPUseDefaultPort = AppSettings.Get<bool>("httpUseDefaultPort");
@@ -367,6 +375,9 @@ namespace psx_cpl
                     if (AppSettingExist("proxyDumpPort")) ProxyDumpPort = AppSettings.Get<int>("proxyDumpPort");
                     if (AppSettingExist("proxyDumpUsePort")) ProxyDumpUsePort = AppSettings.Get<bool>("proxyDumpUsePort");
                     if (AppSettingExist("proxyDumpSplitSessions")) ProxyDumpSplitSessions = AppSettings.Get<bool>("proxyDumpSplitSessions");
+                    if (AppSettingExist("generalSwitchPS4PortWithFirmwareVersion")) GeneralSwitchPS4PortWithFirmwareVersion = AppSettings.Get<bool>("generalSwitchPS4PortWithFirmwareVersion");
+
+
 
                 }
                 else
@@ -398,11 +409,11 @@ namespace psx_cpl
 
 
 
-                config.AppSettings.Settings.Remove("httpGuideDefaultFile");
-                config.AppSettings.Settings.Add("httpGuideDefaultFile", HTTPGuideDefaultFile);
+                config.AppSettings.Settings.Remove("httpDefaultFile");
+                config.AppSettings.Settings.Add("httpDefaultFile", HTTPDefaultFile);
 
-                config.AppSettings.Settings.Remove("httpGuideUseDefaultFile");
-                config.AppSettings.Settings.Add("httpGuideUseDefaultFile", HTTPGuideUseDefaultFile.ToString());
+                config.AppSettings.Settings.Remove("httpUseDefaultFile");
+                config.AppSettings.Settings.Add("httpUseDefaultFile", HTTPUseDefaultFile.ToString());
 
                 config.AppSettings.Settings.Remove("httpDefaultPort");
                 config.AppSettings.Settings.Add("httpDefaultPort", HTTPDefaultPort.ToString());
@@ -477,6 +488,8 @@ namespace psx_cpl
                 config.AppSettings.Settings.Remove("proxyDumpSplitSessions");
                 config.AppSettings.Settings.Add("proxyDumpSplitSessions", ProxyDumpSplitSessions.ToString());
 
+                config.AppSettings.Settings.Remove("generalSwitchPS4PortWithFirmwareVersion");
+                config.AppSettings.Settings.Add("generalSwitchPS4PortWithFirmwareVersion", GeneralSwitchPS4PortWithFirmwareVersion.ToString());
 
                 // Save the changes in App.config file.
                 config.Save(ConfigurationSaveMode.Modified);
@@ -492,7 +505,7 @@ namespace psx_cpl
 
         public void ApplySettings()
         {
-            if (httpGuideUseDefaultFile && string.IsNullOrEmpty(httpGuideDefaultFile) && File.Exists(httpGuideDefaultFile)) ; //fixme: write text to textbox
+            if (httpUseDefaultFile && string.IsNullOrEmpty(httpDefaultFile) && File.Exists(httpDefaultFile)) ; //fixme: write text to textbox
         }
 
     }
