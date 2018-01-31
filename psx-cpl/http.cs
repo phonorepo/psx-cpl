@@ -132,17 +132,17 @@ namespace psx_cpl
 
             Console.WriteLine("[INFO] requestWait fullPath: " + fullPath);
 
-            if (MainWindow.Instance.AppSettings.HTTPGuideUseDefaultFile)
+            if (MainWindow.Instance.AppSettings.HTTPUseDefaultFile)
             {
-                if (File.Exists(MainWindow.Instance.AppSettings.HTTPGuideDefaultFile))
+                if (File.Exists(MainWindow.Instance.AppSettings.HTTPDefaultFile))
                 {
-                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPGuideDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
-                    returnFile(c, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile);
+                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
+                    returnFile(c, MainWindow.Instance.AppSettings.HTTPDefaultFile);
                 }
-                if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile)))
+                if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile)))
                 {
-                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
-                    returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPGuideDefaultFile));
+                    MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
+                    returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile));
                 }
             }
             else if (Directory.Exists(fullPath))
