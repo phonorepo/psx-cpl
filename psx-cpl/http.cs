@@ -158,17 +158,17 @@ namespace psx_cpl
 
             Console.WriteLine("[INFO] requestWait fullPath: " + fullPath);
 
-            if (MainWindow.Instance.AppSettings.HTTPUseDefaultFile)
+            if (MainWindow.Instance.AppSettings.HTTPUseDefaultFile && c.Request.RawUrl == "/")
             {
                 if (File.Exists(MainWindow.Instance.AppSettings.HTTPDefaultFile))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
-                    returnFile(c, MainWindow.Instance.AppSettings.HTTPDefaultFile);
+                    redirectFile(c, MainWindow.Instance.AppSettings.HTTPDefaultFile);
                 }
                 if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile)))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
-                    returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile));
+                    redirectFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile));
                 }
             }
             else if (Directory.Exists(fullPath))
@@ -210,17 +210,17 @@ namespace psx_cpl
 
             Console.WriteLine("[INFO] requestWaitELFloader fullPath: " + fullPath);
 
-            if (MainWindow.Instance.AppSettings.HTTPElfloaderUseDefaultFile)
+            if (MainWindow.Instance.AppSettings.HTTPElfloaderUseDefaultFile && c.Request.RawUrl == "/")
             {
                 if (File.Exists(MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
-                    returnFile(c, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile);
+                    redirectFile(c, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile);
                 }
                 if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile)))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
-                    returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile));
+                    redirectFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile));
                 }
             }
             else if (Directory.Exists(fullPath))
@@ -336,6 +336,26 @@ namespace psx_cpl
 
             context.Response.StatusCode = 404;
             context.Response.Close();
+        }
+
+        private void redirectFile(HttpListenerContext context, string filePath)
+        {
+            Console.WriteLine("[INFO] redirectFile Start");
+            
+            try
+            {
+                var link = filePath.Replace(RootPath, "").Replace('\\', '/');
+                context.Response.Redirect(link);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[ERROR] redirectFile: " + ex.ToString());
+            }
+            finally
+            {
+                context.Response.Close();
+            }
+
         }
 
         private static string tuneUrl(string url)
