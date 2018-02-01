@@ -71,7 +71,7 @@ namespace psx_cpl.Windows
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            MainWindow.Instance.WindowInfo = null;
+            MainWindow.Instance.WindowInfoIsOpen = false;
         }
 
         private void btnClearDNSLog_Click(object sender, RoutedEventArgs e)
