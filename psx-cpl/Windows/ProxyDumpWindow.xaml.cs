@@ -83,7 +83,7 @@ namespace psx_cpl.Windows
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            MainWindow.Instance.WindowProxyDump = null;
+            MainWindow.Instance.WindowProxyDumpIsOpen = false;
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
