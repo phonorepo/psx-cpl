@@ -276,6 +276,8 @@ namespace psx_cpl
         /// Log
         /// </summary>
 
+        public bool WindowLogIsOpen = false;
+
         private Windows.ElfLoaderLog windowLog;
         public Windows.ElfLoaderLog WindowLog
         {
@@ -336,9 +338,13 @@ namespace psx_cpl
             System.Windows.Threading.DispatcherPriority.Normal,
             new Action(() =>
             {
-                if (Instance.WindowLog == null) Instance.WindowLog = new Windows.ElfLoaderLog();
-                //WindowLog.Text.ItemsSource = Log;
-                Instance.WindowLog.Show();
+                if(!Instance.WindowLogIsOpen)
+                {
+                    Instance.WindowLog = new Windows.ElfLoaderLog();
+                    //WindowLog.Text.ItemsSource = Log;
+                    Instance.WindowLog.Show();
+                    Instance.WindowLogIsOpen = true;
+                }
             }));
         }
 
@@ -501,6 +507,9 @@ namespace psx_cpl
         /// <summary>
         /// Info Window
         /// </summary>
+
+        public bool WindowInfoIsOpen = false;
+
         private Windows.Info windowInfo;
         public Windows.Info WindowInfo
         {
@@ -514,8 +523,12 @@ namespace psx_cpl
             System.Windows.Threading.DispatcherPriority.Normal,
             new Action(() =>
             {
-                if (Instance.WindowInfo == null) Instance.WindowInfo = new Windows.Info();
-                Instance.WindowInfo.Show();
+                if (!Instance.WindowInfoIsOpen)
+                {
+                    Instance.WindowInfo = new Windows.Info();
+                    Instance.WindowInfo.Show();
+                    Instance.WindowInfoIsOpen = true;
+                }
             }));
         }
 
@@ -523,6 +536,8 @@ namespace psx_cpl
         /// <summary>
         /// ProxyDump Window
         /// </summary>
+
+        public bool WindowProxyDumpIsOpen = false;
 
         private int proxyPort = 8877;
         public int ProxyPort
@@ -543,8 +558,12 @@ namespace psx_cpl
             System.Windows.Threading.DispatcherPriority.Normal,
             new Action(() =>
             {
-                if (Instance.WindowProxyDump == null) Instance.WindowProxyDump = new Windows.ProxyDumpWindow();
-                Instance.WindowProxyDump.Show();
+                if (!Instance.WindowProxyDumpIsOpen)
+                {
+                    Instance.WindowProxyDump = new Windows.ProxyDumpWindow();
+                    Instance.WindowProxyDump.Show();
+                    Instance.WindowProxyDumpIsOpen = true;
+                }
             }));
         }
 
@@ -559,6 +578,9 @@ namespace psx_cpl
         /// <summary>
         /// Settings Window
         /// </summary>
+
+        public bool WindowSettingsIsOpen = false;
+
         private Windows.Settings windowSettings;
         public Windows.Settings WindowSettings
         {
@@ -572,8 +594,12 @@ namespace psx_cpl
             System.Windows.Threading.DispatcherPriority.Normal,
             new Action(() =>
             {
-                if (Instance.WindowInfo == null) Instance.WindowSettings = new Windows.Settings();
-                Instance.WindowSettings.Show();
+                if (!Instance.WindowSettingsIsOpen)
+                {
+                    Instance.WindowSettings = new Windows.Settings();
+                    Instance.WindowSettings.Show();
+                    Instance.WindowSettingsIsOpen = true;
+                }
             }));
         }
 
