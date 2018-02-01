@@ -79,7 +79,7 @@ namespace psx_cpl.Windows
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            MainWindow.Instance.WindowLog = null;
+            MainWindow.Instance.WindowLogIsOpen = false;
         }
 
     }
