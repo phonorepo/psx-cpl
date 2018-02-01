@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace psx_cpl
 {
-    public class Settings : INotifyPropertyChanged
+    public class Settings: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -21,9 +21,9 @@ namespace psx_cpl
         }
 
 
-        // General Settings
+    // General Settings
 
-        private string localIP;
+    private string localIP;
         public string LocalIP
         {
             get { return localIP; }
@@ -376,7 +376,7 @@ namespace psx_cpl
                     if (AppSettingExist("proxyDumpUsePort")) ProxyDumpUsePort = AppSettings.Get<bool>("proxyDumpUsePort");
                     if (AppSettingExist("proxyDumpSplitSessions")) ProxyDumpSplitSessions = AppSettings.Get<bool>("proxyDumpSplitSessions");
                     if (AppSettingExist("generalSwitchPS4PortWithFirmwareVersion")) GeneralSwitchPS4PortWithFirmwareVersion = AppSettings.Get<bool>("generalSwitchPS4PortWithFirmwareVersion");
-
+                    
 
 
                 }
@@ -509,5 +509,5 @@ namespace psx_cpl
         }
 
     }
-
+    
 }

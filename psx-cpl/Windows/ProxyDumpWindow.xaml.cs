@@ -29,7 +29,7 @@ namespace psx_cpl.Windows
 
             try
             {
-                if (MainWindow.Instance.ProxyDumpInstance == null) MainWindow.Instance.ProxyDumpInstance = new ProxyDump.ProxyDump();
+                if(MainWindow.Instance.ProxyDumpInstance == null) MainWindow.Instance.ProxyDumpInstance = new ProxyDump.ProxyDump();
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace psx_cpl.Windows
         {
             get { return _value; }
         }
-
+        
         private void ListViewScrollViewer_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             ScrollViewer scv = (ScrollViewer)sender;
@@ -164,7 +164,7 @@ namespace psx_cpl.Windows
                     File.WriteAllText(MainWindow.Instance.ProxyDumpInstance.URIFilterFilePath, LinesToSave);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
 
             }

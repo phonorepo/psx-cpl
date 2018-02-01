@@ -1,4 +1,4 @@
-﻿<Window x:Class="psx_cpl.Windows.ElfLoaderLog"
+<Window x:Class="psx_cpl.Windows.ElfLoaderLog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,7 +13,6 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="80"></RowDefinition>
         </Grid.RowDefinitions>
-
 
         <TabControl Grid.Row="1" Name="Tabs">
             <TabItem Header="Log">

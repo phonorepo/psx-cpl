@@ -73,8 +73,8 @@ namespace psx_cpl.Windows
         {
             MainWindow.Instance.WindowInfo = null;
         }
-        
-                private void btnClearDNSLog_Click(object sender, RoutedEventArgs e)
+
+        private void btnClearDNSLog_Click(object sender, RoutedEventArgs e)
         {
             try
             {

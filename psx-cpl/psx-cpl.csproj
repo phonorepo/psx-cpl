@@ -70,7 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Client.cs" />
+    <Compile Include="client.cs" />
     <Compile Include="converter.cs" />
     <Compile Include="dns.cs" />
     <Compile Include="network.cs" />

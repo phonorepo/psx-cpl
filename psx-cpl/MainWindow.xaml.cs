@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Configuration;
 
 namespace psx_cpl
 {
@@ -33,9 +34,11 @@ namespace psx_cpl
             get { return instance; }
         }
 
+
         public static string ErrorTag = "[ERROR]";
         public static string InfoTag = "[INFO]";
         public static string NL = Environment.NewLine;
+
 
         private string[] localIPs;
         public string[] LocalIPs
@@ -55,7 +58,6 @@ namespace psx_cpl
                 OnPropertyChanged("SelectedLocalIP");
             }
         }
-        
         public string NewLocalIP
         {
             set
@@ -74,14 +76,14 @@ namespace psx_cpl
                 }
             }
         }
-            
-        
+
+
 
         public static FileInfo payload;
         public static int PayloadLimitByte = 10000000;
 
-        public static Client client = new Client();
-        public static Client clientPayload = new Client();
+        public static client client = new client();
+        public static client clientPayload = new client();
 
         public static HttpFileServer webServer;
         public static HttpFileServer elfLoaderWebServer;
@@ -152,6 +154,7 @@ namespace psx_cpl
             get { return appSettings; }
             set { appSettings = value; OnPropertyChanged("AppSettings"); }
         }
+
         public static string FirmwareVersionsFilePath
         {
             get { return Path.Combine(AppDir, "config", "firmwareversions.txt"); }
@@ -166,6 +169,7 @@ namespace psx_cpl
             get { return firmwareVersions; }
             set { firmwareVersions = value; OnPropertyChanged("FirmwareVersions"); }
         }
+
 
         public int LastFirmware
         {
@@ -189,6 +193,29 @@ namespace psx_cpl
             set { domainsToRedirect = value; OnPropertyChanged("DomainsToRedirect"); }
         }
 
+        public string DomainsToRedirectAsString
+        {
+            get { return string.Join(Environment.NewLine, DomainsToRedirect); }
+            set
+            {
+                var tempList = new List<string>();
+
+                string newValue = value;
+
+                //check for important line that should not be removed
+                string importantEntry = "dontremove.default.entry";
+
+                if (!value.Contains(importantEntry))
+                {
+                    newValue = importantEntry + Environment.NewLine + value;
+                }
+
+                tempList.AddRange(newValue.Split(new string[] { Environment.NewLine }, StringSplitOptions.None));
+                DomainsToRedirect = tempList.ToArray();
+                OnPropertyChanged("DomainsToRedirectAsString");
+            }
+        }
+
 
 
         public static bool DNSstarted = false;
@@ -203,6 +230,17 @@ namespace psx_cpl
         public static List<string> DnsBlackList
         {
             get; set;
+        }
+        public string DnsBlackListAsString
+        {
+            get { return string.Join(Environment.NewLine, DnsBlackList); }
+            set
+            {
+                if (DnsBlackList == null) DnsBlackList = new List<string>();
+                else DnsBlackList.Clear();
+                DnsBlackList.AddRange(value.Split(new string[] { Environment.NewLine }, StringSplitOptions.None));
+                OnPropertyChanged("DnsBlackListAsString");
+            }
         }
 
 
@@ -222,6 +260,8 @@ namespace psx_cpl
                 if (Instance.ComboBoxFirmwareVersion != null && Instance.ComboBoxFirmwareVersion.Items.Count > 0)
                 {
                     Console.WriteLine("Payloads: " + Instance.ComboBoxFirmwareVersion.Text);
+
+                    //return payloads.Where(kvp => kvp.Key == Instance.ComboBoxFirmwareVersion.Text).ToDictionary(x => x.Key, x => x.Value);
                     return payloads.Where(kvp => kvp.Key == Instance.ComboBoxFirmwareVersion.Text).ToList();
                 }
                 else
@@ -249,7 +289,7 @@ namespace psx_cpl
             get { return log; }
             set { log = value; OnPropertyChanged("Log"); }
         }
-
+        
         public static void AddToLog(string Text)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(
@@ -297,6 +337,7 @@ namespace psx_cpl
             new Action(() =>
             {
                 if (Instance.WindowLog == null) Instance.WindowLog = new Windows.ElfLoaderLog();
+                //WindowLog.Text.ItemsSource = Log;
                 Instance.WindowLog.Show();
             }));
         }
@@ -482,13 +523,13 @@ namespace psx_cpl
         /// <summary>
         /// ProxyDump Window
         /// </summary>
+
         private int proxyPort = 8877;
         public int ProxyPort
         {
             get { return proxyPort; }
             set { proxyPort = value; OnPropertyChanged("ProxyPort"); }
         }
-
         private Windows.ProxyDumpWindow windowProxyDump;
         public Windows.ProxyDumpWindow WindowProxyDump
         {
@@ -513,6 +554,7 @@ namespace psx_cpl
             get { return proxyDumpInstance; }
             set { proxyDumpInstance = value; OnPropertyChanged("ProxyDumpInstance"); }
         }
+
 
         /// <summary>
         /// Settings Window
@@ -625,6 +667,11 @@ namespace psx_cpl
         }
 
 
+
+        /// <summary>
+        /// MainWindow
+        /// </summary>
+
         public MainWindow()
         {
             instance = this;
@@ -649,12 +696,14 @@ namespace psx_cpl
 
             Initialize();
 
+
             if (AppDomain.CurrentDomain.SetupInformation.ConfigurationFile != null)
             {
                 MainWindow.ConfigFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
             }
-
+            
             //Load Settings when Whindow is loaded ...
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -666,6 +715,9 @@ namespace psx_cpl
         /// <summary>
         /// Stuff
         /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
 
         public void mBox(string Message)
         {
@@ -677,6 +729,8 @@ namespace psx_cpl
            }));
 
         }
+
+
 
         public static void Initialize()
         {
@@ -700,10 +754,10 @@ namespace psx_cpl
 
         public void LoadSettings()
         {
-            if (AppSettings == null) AppSettings = new Settings();
+            if(AppSettings == null) AppSettings = new Settings();
             AppSettings.LoadSettings();
 
-            if (AppSettings != null)
+            if(AppSettings != null)
             {
                 if (AppSettings.OpenLogAfterStart) OpenInfoWindow();
                 if (AppSettings.OpenElfloaderLogAfterStart) OpenLogWindow();
@@ -716,7 +770,7 @@ namespace psx_cpl
                 if (AppSettings.PS4UseDefaultPort && AppSettings.PS4DefaultPort >= 0) txtBoxPS4Port.Text = AppSettings.PS4DefaultPort.ToString();
 
                 if (AppSettings.PayloadUseDefaultFile && File.Exists(AppSettings.PayloadDefaultFile)) UseCustomPayload(AppSettings.PayloadDefaultFile);
-
+                
             }
         }
 
@@ -914,11 +968,13 @@ namespace psx_cpl
                         payloads.Add(newItem);
                         ComboBoxItem item = (ComboBoxItem)Instance.ComboBoxPayLoad.ItemContainerGenerator.ContainerFromItem(newItem);
                         Instance.ComboBoxPayLoad.SelectedItem = item;
-                    }
+                     }
                 }
 
             }
         }
+
+
 
         /////
         /// WebServer
@@ -1008,7 +1064,7 @@ namespace psx_cpl
                         //string[] ip = new string[] { Instance.comboBoxLocalIP.Text };
                         string ip = Instance.comboBoxLocalIP.Text;
                         Console.WriteLine(InfoTag + " StartDNS: Trying to start redirecting requests to selected IP: " + ip);
-                        await dns.DNSAsync(Instance.DomainsToRedirect, ip, DnsBlackList);
+                        await dns.DNSAsync(Instance.DomainsToRedirect, ip, DnsBlackList, Instance.AppSettings.DNSForwardServer);
                     }
                     else
                     {
@@ -1094,7 +1150,7 @@ namespace psx_cpl
                 {
                     AddToLog(ErrorTag + " btn_SendPayload_Click - clientPayload is null or clientPayload is already connected");
                 }
-                
+
                 OpenLogWindow();
             }
         }
@@ -1117,7 +1173,7 @@ namespace psx_cpl
         private void ComboBoxFirmwareVersion_DropDownClosed(object sender, EventArgs e)
         {
             Console.WriteLine(InfoTag + " ComboBoxFirmwareVersion_SelectionChanged");
-            if (AppSettings != null && AppSettings.GeneralSwitchPS4PortWithFirmwareVersion && !AppSettings.PS4UseDefaultPort && txtBoxPS4Port != null && ComboBoxFirmwareVersion != null && !String.IsNullOrEmpty(ComboBoxFirmwareVersion.Text))
+            if(AppSettings != null && AppSettings.GeneralSwitchPS4PortWithFirmwareVersion && !AppSettings.PS4UseDefaultPort && txtBoxPS4Port != null && ComboBoxFirmwareVersion != null && !String.IsNullOrEmpty(ComboBoxFirmwareVersion.Text))
             {
                 if (ComboBoxFirmwareVersion.Text == "1.76") txtBoxPS4Port.Text = "5054"; // if selected 1.76 as Firmwareversion set port to Elfloader port as default
                 if (ComboBoxFirmwareVersion.Text == "4.05") txtBoxPS4Port.Text = "9020"; // if selected 4.05 as Firmwareversion set port to IDC code exec port as default
@@ -1280,6 +1336,5 @@ namespace psx_cpl
         {
             OpenSettingsWindow();
         }
-
     }
 }

@@ -23,6 +23,32 @@ namespace psx_cpl
             set { rootPath = value; }
         }
 
+        /*
+        public HttpFileServer(string rootPath)
+        {
+            Console.WriteLine("rootPath: " + rootPath);
+
+            this.RootPath = rootPath;
+            http = new HttpListener();
+            http.Prefixes.Add("http://localhost:8889/");
+            http.Prefixes.Add("http://127.0.0.1:8889/");
+            http.Start();
+            http.BeginGetContext(requestWait, null);
+        }
+
+        public HttpFileServer(string rootPath, int port)
+        {
+            Console.WriteLine("rootPath: " + rootPath);
+
+            this.RootPath = rootPath;
+            http = new HttpListener();
+            http.Prefixes.Add("http://localhost:" + port + "/");
+            http.Prefixes.Add("http://127.0.0.1:" + port + "/");
+            http.Start();
+            http.BeginGetContext(requestWait, null);
+        }
+        */
+
         public HttpFileServer(string rootPath, int port, string[] PrefixIPs, bool ElfLoader)
         {
             Console.WriteLine("rootPath: " + rootPath);
@@ -48,7 +74,6 @@ namespace psx_cpl
                         Console.WriteLine("Prefix-IP: " + ip);
                         MainWindow.AddToLogWeb("start serving as: http://" + ip + ":" + port + "/");
                         http.Prefixes.Add("http://" + ip + ":" + port + "/");
-                        //if (!ElfLoader) http.Prefixes.Add("https://" + ip + ":443/");
                     }
                 }
 
@@ -86,6 +111,7 @@ namespace psx_cpl
                         Console.WriteLine("Prefix-IP: " + ip);
                         MainWindow.AddToLogWeb("start serving as: http://" + ip + ":" + port + "/");
                         http.Prefixes.Add("http://" + ip + ":" + port + "/");
+                        //if (!ElfLoader) http.Prefixes.Add("https://" + ip + ":443/");
                     }
                 }
 

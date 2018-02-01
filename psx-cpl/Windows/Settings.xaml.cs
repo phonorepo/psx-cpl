@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -63,7 +65,7 @@ namespace psx_cpl.Windows
             MainWindow.Instance.WindowInfo = null;
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+         private void Save_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.AppSettings.Save();
             MainWindow.Instance.LoadSettings();
@@ -77,6 +79,57 @@ namespace psx_cpl.Windows
         private void Apply_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Instance.LoadSettings();
+        }
+
+        public void SaveDNSBlackList()
+        {
+            try
+            {
+                if (MainWindow.DnsBlackList != null && MainWindow.DnsBlackList.Count > 0)
+                {
+                    string LinesToSave = Regex.Replace(MainWindow.Instance.DnsBlackListAsString, @"^\s+$[\r\n]*", "", RegexOptions.Multiline);
+
+                    File.WriteAllText(MainWindow.DnsBlackListFilePath, LinesToSave);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void btnDNSServerSaveBlackList_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDNSBlackList();
+        }
+
+        public void SaveDNSMasterFile()
+        {
+            try
+            {
+                if (MainWindow.Instance.DomainsToRedirect != null && MainWindow.Instance.DomainsToRedirect.Length > 0)
+                {
+                    string LinesToSave = Regex.Replace(MainWindow.Instance.DomainsToRedirectAsString, @"^\s+$[\r\n]*", "", RegexOptions.Multiline);
+
+                    //check for important line that should not be removed
+                    string importantEntry = "dontremove.default.entry";
+                    if (!LinesToSave.Contains(importantEntry))
+                    {
+                        LinesToSave = importantEntry + Environment.NewLine + LinesToSave;
+                    }
+
+                    File.WriteAllText(MainWindow.DomainsToRedirectFilePath, LinesToSave);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void btnDNSServerSavemasterFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDNSMasterFile();
         }
     }
 }
