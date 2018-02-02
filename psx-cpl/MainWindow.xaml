@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:psx_cpl"
         mc:Ignorable="d"
         Icon="Images\x.png"
-        Title="psx control panel" Height="600" Width="450" Loaded="Window_Loaded">
+        Title="psx control panel" Height="600" Width="450" Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Window.Resources>
         <SolidColorBrush x:Key="BrushMainGrid" Color="#444"/>
