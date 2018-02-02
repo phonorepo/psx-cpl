@@ -128,9 +128,10 @@ namespace psx_cpl.Windows
             {
                 if (MainWindow.Instance.ProxyDumpInstance != null)
                 {
-                    tButton.BorderThickness = new Thickness(4, 4, 4, 4);
-                    tButton.Padding = new Thickness(4, 4, 4, 4);
-                    //btnToggleDumpModeLabel2.Content = "Stop";
+                    tButton.BorderThickness = new Thickness(2, 2, 2, 2);
+                    tButton.Padding = new Thickness(0, 0, 0, 0);
+                    btnToggleDumpModeLabel1.Content = "DUMPING";
+                    
                     MainWindow.Instance.ProxyDumpInstance.DumpMode = true;
                 }
             }
@@ -138,7 +139,8 @@ namespace psx_cpl.Windows
             {
                 tButton.BorderThickness = new Thickness(1, 1, 1, 1);
                 tButton.Padding = new Thickness(0, 0, 0, 0);
-                //btnToggleDumpModeLabel2.Content = "Start";
+                btnToggleDumpModeLabel1.Content = "RESPONDING";
+                
                 if (MainWindow.Instance.ProxyDumpInstance != null) MainWindow.Instance.ProxyDumpInstance.DumpMode = false;
             }
         }
