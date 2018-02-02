@@ -345,6 +345,10 @@ namespace psx_cpl
                     Instance.WindowLog.Show();
                     Instance.WindowLogIsOpen = true;
                 }
+                else
+                {
+                    Instance.WindowLog.Activate();
+                }
             }));
         }
 
@@ -529,6 +533,10 @@ namespace psx_cpl
                     Instance.WindowInfo.Show();
                     Instance.WindowInfoIsOpen = true;
                 }
+                else
+                {
+                    Instance.WindowInfo.Activate();
+                }
             }));
         }
 
@@ -563,6 +571,10 @@ namespace psx_cpl
                     Instance.WindowProxyDump = new Windows.ProxyDumpWindow();
                     Instance.WindowProxyDump.Show();
                     Instance.WindowProxyDumpIsOpen = true;
+                }
+                else
+                {
+                    Instance.WindowProxyDump.Activate();
                 }
             }));
         }
@@ -599,6 +611,10 @@ namespace psx_cpl
                     Instance.WindowSettings = new Windows.Settings();
                     Instance.WindowSettings.Show();
                     Instance.WindowSettingsIsOpen = true;
+                }
+                else
+                {
+                    Instance.WindowSettings.Activate();
                 }
             }));
         }
