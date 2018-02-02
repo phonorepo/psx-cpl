@@ -28,8 +28,8 @@
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                             <Button Width="70" Height="20" Name="btnClearProxyDumpLog" Click="btnClearProxyDumpLog_Click">Clear</Button>
                             <Button Width="70" Height="20" Name="btnCopyProxyDumpLog" Click="btnCopyProxyDumpLog_Click">Copy</Button>
-                            <ToggleButton Name="btn_ToggleDumpMode" Width="70" Height="20" Click="btn_ToggleDumpMode_Click" FontWeight="Bold" Margin="0,0,4,0" ToolTip=">Enable Dump Mode and record sessions that match the URI Filters">
-                                <Label Name="btnToggleDumpModeLabel1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Top" FontSize="11" Padding="0">Dump</Label>
+                            <ToggleButton Name="btn_ToggleDumpMode" Width="80" Height="20" Click="btn_ToggleDumpMode_Click" FontWeight="Bold" Margin="0,0,4,0" ToolTip=">Enable Dump Mode and record sessions that match the URI Filters">
+                                <Label Name="btnToggleDumpModeLabel1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Top" FontSize="11" Padding="0">RESPONDING</Label>
                             </ToggleButton>
                             <Label>Port:</Label>
                             <TextBox Name="tbBoxProxyPort" Width="100" Text="{Binding ProxyPort, Mode=TwoWay}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
