@@ -711,7 +711,7 @@ namespace psx_cpl.ProxyDump
             // For the purposes of this demo, we'll forbid connections to HTTPS 
             // sites that use invalid certificates. Change this from the default only
             // if you know EXACTLY what that implies.
-            Fiddler.CONFIG.IgnoreServerCertErrors = false;
+            Fiddler.CONFIG.IgnoreServerCertErrors = true;
 
             // ... but you can allow a specific (even invalid) certificate by implementing and assigning a callback...
             // FiddlerApplication.OverrideServerCertificateValidation += new OverrideCertificatePolicyHandler(FiddlerApplication_OverrideServerCertificateValidation);
