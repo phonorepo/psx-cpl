@@ -50,7 +50,7 @@
             <StackPanel Orientation="Vertical" Margin="4,0,0,0">
                 <Label HorizontalAlignment="Center"  Foreground="{StaticResource BrushTextOnDark}" FontWeight="Bold" FontSize="16">PS4 Port:</Label>
                 <TextBox Width="50" Name="txtBoxPS4Port" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold">5054</TextBox>
-                <TextBox Height="52" TextWrapping="Wrap" xml:space="preserve" HorizontalAlignment="Center"> Code Execution: 9023 &#x0a; Elfloader send to: 5054 &#x0a; Elfloader listen: 5088</TextBox><TextBox Height="70" TextWrapping="Wrap" xml:space="preserve" HorizontalAlignment="Center"> Code Execution IDC 4.05: 9020 &#x0a; Code Execution 1.76: 9023 &#x0a; Elfloader send to: 5054 &#x0a; Elfloader listen: 5088</TextBox>
+                <TextBox Height="70" TextWrapping="Wrap" xml:space="preserve" HorizontalAlignment="Center"> Code Execution IDC 4.05: 9020 &#x0a; Code Execution 1.76: 9023 &#x0a; Elfloader send to: 5054 &#x0a; Elfloader listen: 5088</TextBox>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="4,0,0,0">
