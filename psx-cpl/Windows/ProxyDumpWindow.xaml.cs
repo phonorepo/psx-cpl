@@ -139,7 +139,7 @@ namespace psx_cpl.Windows
             {
                 tButton.BorderThickness = new Thickness(1, 1, 1, 1);
                 tButton.Padding = new Thickness(0, 0, 0, 0);
-                btnToggleDumpModeLabel1.Content = "RESPONDING";
+                btnToggleDumpModeLabel1.Content = "INTERCEPT";
                 
                 if (MainWindow.Instance.ProxyDumpInstance != null) MainWindow.Instance.ProxyDumpInstance.DumpMode = false;
             }
