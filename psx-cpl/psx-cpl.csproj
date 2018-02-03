@@ -84,6 +84,9 @@
     <Compile Include="Windows\ElfLoaderLog.xaml.cs">
       <DependentUpon>ElfLoaderLog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ProxyDumpInfo.xaml.cs">
+      <DependentUpon>ProxyDumpInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ProxyDumpWindow.xaml.cs">
       <DependentUpon>ProxyDumpWindow.xaml</DependentUpon>
     </Compile>
@@ -109,6 +112,10 @@
     <Page Include="Windows\ElfLoaderLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProxyDumpInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\ProxyDumpWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
