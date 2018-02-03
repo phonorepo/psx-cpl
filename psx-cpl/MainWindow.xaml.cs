@@ -566,15 +566,19 @@ namespace psx_cpl
             System.Windows.Threading.DispatcherPriority.Normal,
             new Action(() =>
             {
-                if (!Instance.WindowProxyDumpIsOpen)
+                // if clicked OK button of warning window
+                if (OpenProxyDumpInfoWindow() == 5)
                 {
-                    Instance.WindowProxyDump = new Windows.ProxyDumpWindow();
-                    Instance.WindowProxyDump.Show();
-                    Instance.WindowProxyDumpIsOpen = true;
-                }
-                else
-                {
-                    Instance.WindowProxyDump.Activate();
+                    if (!Instance.WindowProxyDumpIsOpen)
+                    {
+                        Instance.WindowProxyDump = new Windows.ProxyDumpWindow();
+                        Instance.WindowProxyDump.Show();
+                        Instance.WindowProxyDumpIsOpen = true;
+                    }
+                    else
+                    {
+                        Instance.WindowProxyDump.Activate();
+                    }
                 }
             }));
         }
@@ -586,6 +590,39 @@ namespace psx_cpl
             set { proxyDumpInstance = value; OnPropertyChanged("ProxyDumpInstance"); }
         }
 
+        /// <summary>
+        /// ProxyDump Info Window
+        /// </summary>
+
+        public bool WindowProxyDumpInfoIsOpen = false;
+
+        private Windows.ProxyDumpInfo windowProxyDumpInfo;
+        public Windows.ProxyDumpInfo WindowProxyDumpInfo
+        {
+            get { return windowProxyDumpInfo; }
+            set { windowProxyDumpInfo = value; OnPropertyChanged("WindowProxyDumpInfo"); }
+        }
+
+        public static int OpenProxyDumpInfoWindow()
+        {
+            Application.Current.Dispatcher.Invoke(
+            System.Windows.Threading.DispatcherPriority.Normal,
+            new Action(() =>
+            {
+                if (!Instance.WindowProxyDumpInfoIsOpen)
+                {
+                    Instance.WindowProxyDumpInfo = new Windows.ProxyDumpInfo();
+                    Instance.WindowProxyDumpInfo.Owner = Instance;
+                    Instance.WindowProxyDumpInfo.ShowDialog();
+                }
+                else
+                {
+                    Instance.WindowProxyDumpInfo.Activate();
+                }
+                
+            }));
+            return Instance.WindowProxyDumpInfo.Value;
+        }
 
         /// <summary>
         /// Settings Window
