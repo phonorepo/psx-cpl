@@ -23,40 +23,44 @@
 
         <TabControl Grid.Row="1" Name="Tabs">
             <TabItem Name="tabProxyDump" Header="ProxyDump">
-                <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
-                    <DockPanel LastChildFill="True">
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                            <Button Width="70" Height="20" Name="btnClearProxyDumpLog" Click="btnClearProxyDumpLog_Click">Clear</Button>
-                            <Button Width="70" Height="20" Name="btnCopyProxyDumpLog" Click="btnCopyProxyDumpLog_Click">Copy</Button>
-                            <ToggleButton Name="btn_ToggleDumpMode" Width="80" Height="20" Click="btn_ToggleDumpMode_Click" FontWeight="Bold" Margin="0,0,4,0" ToolTip=">INTERCEPT will respond to matches in URI Filters with previously recorded sessions. Dump Mode will record sessions. SAZ-Files can be extracted like ZIP-Archives but they are NOT ZIP-Archives!">
-                                <Label Name="btnToggleDumpModeLabel1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Top" FontSize="11" Padding="0">INTERCEPT</Label>
-                            </ToggleButton>
-                            <Label>Port:</Label>
-                            <TextBox Name="tbBoxProxyPort" Width="100" Text="{Binding ProxyPort, Mode=TwoWay}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                            <Button Width="100" Height="20" Name="btnTrustRootCert" Click="btnTrustRootCert_Click">Trust Root Cert</Button>
-                            <Button Width="100" Height="20" Name="btnUninstallRootCert" Click="btnUninstallRootCert_Click">Uninstall Cert</Button>
-                        </StackPanel>
-                        <ListBox  Name="Text" ItemsSource="{Binding Path=Instance.LogProxyDump}" Width="Auto" Height="Auto" Background="LightGray" VerticalContentAlignment="Stretch">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Height" Value="Auto" />
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                        </ListBox>
-                    </DockPanel>
-                </ScrollViewer>
+                <DockPanel LastChildFill="True">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Button Width="70" Height="20" Name="btnClearProxyDumpLog" Click="btnClearProxyDumpLog_Click">Clear</Button>
+                        <Button Width="70" Height="20" Name="btnCopyProxyDumpLog" Click="btnCopyProxyDumpLog_Click">Copy</Button>
+                        <ToggleButton Name="btn_ToggleDumpMode" Width="80" Height="20" Click="btn_ToggleDumpMode_Click" FontWeight="Bold" Margin="0,0,4,0" ToolTip=">INTERCEPT will respond to matches in URI Filters with previously recorded sessions. Dump Mode will record sessions. SAZ-Files can be extracted like ZIP-Archives but they are NOT ZIP-Archives!">
+                            <Label Name="btnToggleDumpModeLabel1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Top" FontSize="11" Padding="0">INTERCEPT</Label>
+                        </ToggleButton>
+                        <Label>Port:</Label>
+                        <TextBox Name="tbBoxProxyPort" Width="100" Text="{Binding ProxyPort, Mode=TwoWay}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Button Width="100" Height="20" Name="btnTrustRootCert" Click="btnTrustRootCert_Click">Trust Root Cert</Button>
+                        <Button Width="100" Height="20" Name="btnUninstallRootCert" Click="btnUninstallRootCert_Click">Uninstall Cert</Button>
+                    </StackPanel>
+                    <ScrollViewer DockPanel.Dock="Bottom" PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
+                        <DockPanel LastChildFill="True">
+                            <ListBox  Name="Text" ItemsSource="{Binding Path=Instance.LogProxyDump}" Width="Auto" Height="Auto" Background="LightGray" VerticalContentAlignment="Stretch">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Height" Value="Auto" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
+                        </DockPanel>
+                    </ScrollViewer>
+                </DockPanel>
             </TabItem>
 
             <TabItem Name="tabProxyDumpUriFilter" Header="URI Filter" KeyDown="tabProxyDumpUriFilter_KeyDown">
-                <ScrollViewer PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
-                    <DockPanel LastChildFill="True">
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                            <Button Width="70" Height="20" Name="btnProxyDumpSaveUriFilter" Click="btnProxyDumpSaveUriFilter_Click">Save</Button>
-                            <Label>This list should not contain duplicates!</Label>
-                        </StackPanel>
-                        <TextBox DockPanel.Dock="Bottom" Name="tbProxyDumpUriFilter" Text="{Binding Instance.ProxyDumpInstance.URIFilterListAsString, Mode=TwoWay}" AcceptsReturn="True" />
-                    </DockPanel>
-                </ScrollViewer>
+                <DockPanel LastChildFill="True">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <Button Width="70" Height="20" Name="btnProxyDumpSaveUriFilter" Click="btnProxyDumpSaveUriFilter_Click">Save</Button>
+                        <Label>This list should not contain duplicates!</Label>
+                    </StackPanel>
+                    <ScrollViewer DockPanel.Dock="Bottom" PreviewMouseWheel="ListViewScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Visible">
+                        <DockPanel LastChildFill="True">
+                            <TextBox DockPanel.Dock="Bottom" Name="tbProxyDumpUriFilter" Text="{Binding Instance.ProxyDumpInstance.URIFilterListAsString, Mode=TwoWay}" AcceptsReturn="True" />
+                        </DockPanel>
+                    </ScrollViewer>
+                </DockPanel>
             </TabItem>
 
         </TabControl>
