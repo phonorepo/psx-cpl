@@ -405,8 +405,8 @@ namespace psx_cpl
                     if (AppSettingExist("generalSwitchPS4PortWithFirmwareVersion")) GeneralSwitchPS4PortWithFirmwareVersion = AppSettings.Get<bool>("generalSwitchPS4PortWithFirmwareVersion");
 
                     if (AppSettingExist("autoStartDNS")) AutoStartDNS = AppSettings.Get<bool>("autoStartDNS");
-                    if (AppSettingExist("autoStartWebServer")) AutoStartDNS = AppSettings.Get<bool>("autoStartWebServer");
-                    if (AppSettingExist("autoStartElfloaderWebServer")) AutoStartDNS = AppSettings.Get<bool>("autoStartElfloaderWebServer");
+                    if (AppSettingExist("autoStartWebServer")) AutoStartWebServer = AppSettings.Get<bool>("autoStartWebServer");
+                    if (AppSettingExist("autoStartElfloaderWebServer")) AutoStartElfloaderWebServer = AppSettings.Get<bool>("autoStartElfloaderWebServer");
 
 
                 }
