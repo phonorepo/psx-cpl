@@ -265,5 +265,32 @@ namespace psx_cpl.Properties {
                 return ((bool)(this["generalSwitchPS4PortWithFirmwareVersion"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoStartDNS {
+            get {
+                return ((bool)(this["autoStartDNS"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoStartWebServer {
+            get {
+                return ((bool)(this["autoStartWebServer"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoStartElfloaderWebServer {
+            get {
+                return ((bool)(this["autoStartElfloaderWebServer"]));
+            }
+        }
     }
 }
