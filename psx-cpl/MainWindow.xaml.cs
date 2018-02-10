@@ -850,6 +850,9 @@ namespace psx_cpl
 
                 if (AppSettings.PayloadUseDefaultFile && File.Exists(AppSettings.PayloadDefaultFile)) UseCustomPayload(AppSettings.PayloadDefaultFile);
                 
+                if (AppSettings.AutoStartDNS && AppSettings.UseLocalIP && !String.IsNullOrEmpty(AppSettings.LocalIP)) StartDNS();
+                if (AppSettings.AutoStartWebServer) StartWebServer();
+                if (AppSettings.AutoStartElfloaderWebServer) StartElfLoaderWebServer();
             }
         }
 
