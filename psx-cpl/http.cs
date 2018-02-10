@@ -1,4 +1,4 @@
-﻿/*
+/*
 original source by Frank Quednau: https://gist.github.com/flq/369432
 */
 
@@ -12,7 +12,6 @@ namespace psx_cpl
 
     public class HttpFileServer : IDisposable
     {
-        //private readonly string rootPath;
         private string rootPath;
         private const int bufferSize = 1024 * 512; //512KB
         private readonly HttpListener http;
@@ -23,59 +22,44 @@ namespace psx_cpl
             set { rootPath = value; }
         }
 
-        /*
-        public HttpFileServer(string rootPath)
-        {
-            Console.WriteLine("rootPath: " + rootPath);
-
-            this.RootPath = rootPath;
-            http = new HttpListener();
-            http.Prefixes.Add("http://localhost:8889/");
-            http.Prefixes.Add("http://127.0.0.1:8889/");
-            http.Start();
-            http.BeginGetContext(requestWait, null);
-        }
-
-        public HttpFileServer(string rootPath, int port)
-        {
-            Console.WriteLine("rootPath: " + rootPath);
-
-            this.RootPath = rootPath;
-            http = new HttpListener();
-            http.Prefixes.Add("http://localhost:" + port + "/");
-            http.Prefixes.Add("http://127.0.0.1:" + port + "/");
-            http.Start();
-            http.BeginGetContext(requestWait, null);
-        }
-        */
-
         public HttpFileServer(string rootPath, int port, string[] PrefixIPs, bool ElfLoader)
         {
             Console.WriteLine("rootPath: " + rootPath);
 
             this.RootPath = rootPath;
 
-                http = new HttpListener();
-                if (!ElfLoader)
-                {
-                    MainWindow.AddToLogWeb("start serving as: http://localhost:" + port + "/");
-                    http.Prefixes.Add("http://localhost:" + port + "/");
-                }
-                if (!ElfLoader)
-                {
-                    MainWindow.AddToLogWeb("start serving as: http://127.0.0.1:" + port + "/");
-                    http.Prefixes.Add("http://127.0.0.1:" + port + "/");
-                }
+            http = new HttpListener();
+            if (!ElfLoader)
+            {
+                string PrefixString = "http://localhost:" + port + "/";
+                MainWindow.AddToLogWeb("start serving as: "+ PrefixString);
+                if(!http.Prefixes.Contains(PrefixString)) http.Prefixes.Add(PrefixString);
+            }
+            if (!ElfLoader)
+            {
+                string PrefixString = "http://127.0.0.1:" + port + "/";
+                MainWindow.AddToLogWeb("start serving as: " + PrefixString);
+                if (!http.Prefixes.Contains(PrefixString)) http.Prefixes.Add(PrefixString);
+            }
 
-                if (PrefixIPs != null && PrefixIPs.Length > 0)
+            if (MainWindow.Instance.AppSettings.UseLocalIP && !String.IsNullOrEmpty(MainWindow.Instance.AppSettings.LocalIP))
+            {
+                string PrefixString = "http://" + MainWindow.Instance.AppSettings.LocalIP + ":" + port + "/";
+                MainWindow.AddToLogWeb("start serving as configured: " + PrefixString);
+                if (!http.Prefixes.Contains(PrefixString)) http.Prefixes.Add(PrefixString);
+            }
+
+            if (PrefixIPs != null && PrefixIPs.Length > 0)
+            {
+                foreach (string ip in PrefixIPs)
                 {
-                    foreach (string ip in PrefixIPs)
-                    {
-                        Console.WriteLine("Prefix-IP: " + ip);
-                        MainWindow.AddToLogWeb("start serving as: http://" + ip + ":" + port + "/");
-                        http.Prefixes.Add("http://" + ip + ":" + port + "/");
-                    }
+                    string PrefixString = "http://" + ip + ":" + port + "/";
+                    Console.WriteLine("Prefix-IP: " + ip);
+                    MainWindow.AddToLogWeb("start serving as: " + PrefixString);
+                    if (!http.Prefixes.Contains(PrefixString)) http.Prefixes.Add(PrefixString);
                 }
+            }
+
 
             try
             {
@@ -95,23 +79,25 @@ namespace psx_cpl
 
                 if (!ElfLoader)
                 {
-                    MainWindow.AddToLogWeb("start serving as: http://localhost:" + port + "/");
-                    http.Prefixes.Add("http://localhost:" + port + "/");
+                    string PrefixString = "http://localhost:" + port + "/";
+                    MainWindow.AddToLogWeb("start serving as: " + PrefixString);
+                    if (!http.Prefixes.Contains(PrefixString)) http.Prefixes.Add(PrefixString);
                 }
                 if (!ElfLoader)
                 {
-                    MainWindow.AddToLogWeb("start serving as: http://127.0.0.1:" + port + "/");
-                    http.Prefixes.Add("http://127.0.0.1:" + port + "/");
+                    string PrefixString = "http://127.0.0.1:" + port + "/";
+                    MainWindow.AddToLogWeb("start serving as: " + PrefixString);
+                    if (!http.Prefixes.Contains(PrefixString)) http.Prefixes.Add(PrefixString);
                 }
 
                 if (PrefixIPsNew != null && PrefixIPsNew.Length > 0)
                 {
                     foreach (string ip in PrefixIPsNew)
                     {
+                        string PrefixString = "http://" + ip + ":" + port + "/";
                         Console.WriteLine("Prefix-IP: " + ip);
-                        MainWindow.AddToLogWeb("start serving as: http://" + ip + ":" + port + "/");
-                        http.Prefixes.Add("http://" + ip + ":" + port + "/");
-                        //if (!ElfLoader) http.Prefixes.Add("https://" + ip + ":443/");
+                        MainWindow.AddToLogWeb("start serving as: " + PrefixString);
+                        if (!http.Prefixes.Contains(PrefixString)) http.Prefixes.Add(PrefixString);
                     }
                 }
 
@@ -163,11 +149,13 @@ namespace psx_cpl
                 if (File.Exists(MainWindow.Instance.AppSettings.HTTPDefaultFile))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
+                    //returnFile(c, MainWindow.Instance.AppSettings.HTTPDefaultFile);
                     redirectFile(c, MainWindow.Instance.AppSettings.HTTPDefaultFile);
                 }
                 if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile)))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
+                    //returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile));
                     redirectFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPDefaultFile));
                 }
             }
@@ -215,15 +203,17 @@ namespace psx_cpl
                 if (File.Exists(MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile + " Request.RawUrl: " + c.Request.RawUrl);
+                    //returnFile(c, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile);
                     redirectFile(c, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile);
                 }
                 if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile)))
                 {
                     MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
+                    //returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile));
                     redirectFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile));
                 }
             }
-            else if (Directory.Exists(fullPath))
+            if (Directory.Exists(fullPath))
                 returnDirContents(c, fullPath);
             else if (File.Exists(fullPath))
             {
@@ -232,6 +222,11 @@ namespace psx_cpl
                 Console.WriteLine("[INFO] requestWaitELFloader - c.Response: " + c.Response);
 
                 returnFileELFloader(c, fullPath);
+            }
+            else if (File.Exists(Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile)))
+            {
+                MainWindow.AddToLogWeb("Using configured DefaultFile: " + Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile) + " Request.RawUrl: " + c.Request.RawUrl);
+                returnFile(c, Path.Combine(RootPath, MainWindow.Instance.AppSettings.HTTPElfloaderDefaultFile));
             }
             else if (fullPath.Contains(".html?"))
             {
@@ -324,7 +319,7 @@ namespace psx_cpl
             }
             catch (Exception ex)
             {
-                Console.WriteLine("[ERROR] returnFileELFloader: " + ex .ToString());
+                Console.WriteLine("[ERROR] returnFileELFloader: " + ex.ToString());
             }
 
             context.Response.OutputStream.Close();
@@ -338,10 +333,11 @@ namespace psx_cpl
             context.Response.Close();
         }
 
+
         private void redirectFile(HttpListenerContext context, string filePath)
         {
             Console.WriteLine("[INFO] redirectFile Start");
-            
+
             try
             {
                 var link = filePath.Replace(RootPath, "").Replace('\\', '/');
@@ -357,6 +353,7 @@ namespace psx_cpl
             }
 
         }
+
 
         private static string tuneUrl(string url)
         {
