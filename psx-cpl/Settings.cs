@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
@@ -229,6 +229,29 @@ namespace psx_cpl
             set { generalSwitchPS4PortWithFirmwareVersion = value; OnPropertyChanged("GeneralSwitchPS4PortWithFirmwareVersion"); }
         }
 
+        // AutoStart
+
+        private bool autoStartDNS;
+        public bool AutoStartDNS
+        {
+            get { return autoStartDNS; }
+            set { autoStartDNS = value; OnPropertyChanged("AutoStartDNS"); }
+        }
+
+        private bool autoStartWebServer;
+        public bool AutoStartWebServer
+        {
+            get { return autoStartWebServer; }
+            set { autoStartWebServer = value; OnPropertyChanged("AutoStartWebServer"); }
+        }
+
+        private bool autoStartElfloaderWebServer;
+        public bool AutoStartElfloaderWebServer
+        {
+            get { return autoStartElfloaderWebServer; }
+            set { autoStartElfloaderWebServer = value; OnPropertyChanged("AutoStartElfloaderWebServer"); }
+        }
+
 
         /// <summary>
         /// Settings
@@ -294,6 +317,10 @@ namespace psx_cpl
                 if (SettingExist("proxyDumpUsePort")) ProxyDumpUsePort = Properties.Settings.Default.proxyDumpUsePort;
                 if (SettingExist("proxyDumpSplitSessions")) ProxyDumpSplitSessions = Properties.Settings.Default.proxyDumpSplitSessions;
                 if (SettingExist("generalSwitchPS4PortWithFirmwareVersion")) GeneralSwitchPS4PortWithFirmwareVersion = Properties.Settings.Default.generalSwitchPS4PortWithFirmwareVersion;
+
+                if (SettingExist("autoStartDNS")) AutoStartDNS = Properties.Settings.Default.autoStartDNS;
+                if (SettingExist("autoStartWebServer")) AutoStartWebServer = Properties.Settings.Default.autoStartWebServer;
+                if (SettingExist("autoStartElfloaderWebServer")) AutoStartElfloaderWebServer = Properties.Settings.Default.autoStartElfloaderWebServer;
 
             }
             catch (Exception ex)
@@ -376,7 +403,10 @@ namespace psx_cpl
                     if (AppSettingExist("proxyDumpUsePort")) ProxyDumpUsePort = AppSettings.Get<bool>("proxyDumpUsePort");
                     if (AppSettingExist("proxyDumpSplitSessions")) ProxyDumpSplitSessions = AppSettings.Get<bool>("proxyDumpSplitSessions");
                     if (AppSettingExist("generalSwitchPS4PortWithFirmwareVersion")) GeneralSwitchPS4PortWithFirmwareVersion = AppSettings.Get<bool>("generalSwitchPS4PortWithFirmwareVersion");
-                    
+
+                    if (AppSettingExist("autoStartDNS")) AutoStartDNS = AppSettings.Get<bool>("autoStartDNS");
+                    if (AppSettingExist("autoStartWebServer")) AutoStartDNS = AppSettings.Get<bool>("autoStartWebServer");
+                    if (AppSettingExist("autoStartElfloaderWebServer")) AutoStartDNS = AppSettings.Get<bool>("autoStartElfloaderWebServer");
 
 
                 }
@@ -490,6 +520,15 @@ namespace psx_cpl
 
                 config.AppSettings.Settings.Remove("generalSwitchPS4PortWithFirmwareVersion");
                 config.AppSettings.Settings.Add("generalSwitchPS4PortWithFirmwareVersion", GeneralSwitchPS4PortWithFirmwareVersion.ToString());
+
+                config.AppSettings.Settings.Remove("autoStartDNS");
+                config.AppSettings.Settings.Add("autoStartDNS", AutoStartDNS.ToString());
+
+                config.AppSettings.Settings.Remove("autoStartWebServer");
+                config.AppSettings.Settings.Add("autoStartWebServer", AutoStartWebServer.ToString());
+
+                config.AppSettings.Settings.Remove("autoStartElfloaderWebServer");
+                config.AppSettings.Settings.Add("autoStartElfloaderWebServer", AutoStartElfloaderWebServer.ToString());
 
                 // Save the changes in App.config file.
                 config.Save(ConfigurationSaveMode.Modified);
