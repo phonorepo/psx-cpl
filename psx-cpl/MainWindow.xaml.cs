@@ -850,9 +850,9 @@ namespace psx_cpl
 
                 if (AppSettings.PayloadUseDefaultFile && File.Exists(AppSettings.PayloadDefaultFile)) UseCustomPayload(AppSettings.PayloadDefaultFile);
                 
-                if (AppSettings.AutoStartDNS && AppSettings.UseLocalIP && !String.IsNullOrEmpty(AppSettings.LocalIP)) StartDNS();
-                if (AppSettings.AutoStartWebServer) StartWebServer();
-                if (AppSettings.AutoStartElfloaderWebServer) StartElfLoaderWebServer();
+                if (AppSettings.AutoStartDNS && AppSettings.UseLocalIP && !String.IsNullOrEmpty(AppSettings.LocalIP) && btn_DNSServer != null && btn_DNSServer.IsChecked == false) do_btn_DNSServer_Click(btn_DNSServer, true);
+                if (AppSettings.AutoStartWebServer && btn_WebServer != null && btn_WebServer.IsChecked == false) do_btn_WebServer_Click(btn_WebServer, true);
+                if (AppSettings.AutoStartElfloaderWebServer && btn_ElfLoaderServer != null && btn_ElfLoaderServer.IsChecked == false) do_btn_ElfLoaderServer_Click(btn_ElfLoaderServer, true);
             }
         }
 
@@ -1330,9 +1330,11 @@ namespace psx_cpl
             OpenLogWindow();
         }
 
-        private void btn_DNSServer_Click(object sender, RoutedEventArgs e)
+        public void do_btn_DNSServer_Click(System.Windows.Controls.Primitives.ToggleButton tButton, bool checkButton = false)
         {
-            System.Windows.Controls.Primitives.ToggleButton tButton = sender as System.Windows.Controls.Primitives.ToggleButton;
+            MessageBox.Show("do_btn_DNSServer_Click - isChecked: " + tButton.IsChecked);
+
+            if (checkButton) tButton.IsChecked = true;
 
             if (tButton.IsChecked ?? false)
             {
@@ -1344,7 +1346,7 @@ namespace psx_cpl
                     StartDNS();
                     Instance.comboBoxLocalIP.IsEnabled = false;
                 }
-                else if(string.IsNullOrEmpty(Instance.comboBoxLocalIP.Text))
+                else if (string.IsNullOrEmpty(Instance.comboBoxLocalIP.Text))
                 {
                     tButton.IsChecked = false;
                     MessageBox.Show(ErrorTag + " Couldn't get your local IP from the dropdown.");
@@ -1357,16 +1359,27 @@ namespace psx_cpl
                 btnDNSServerLabel2.Content = "Start";
 
                 StopDNS();
-                if (Instance.comboBoxLocalIP != null) Instance.comboBoxLocalIP.IsEnabled = true;    
+                if (Instance.comboBoxLocalIP != null) Instance.comboBoxLocalIP.IsEnabled = true;
             }
         }
 
-        private void btn_WebServer_Click(object sender, RoutedEventArgs e)
+        private void btn_DNSServer_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.Primitives.ToggleButton tButton = sender as System.Windows.Controls.Primitives.ToggleButton;
 
+            do_btn_DNSServer_Click(tButton);
+
+        }
+
+        public void do_btn_WebServer_Click(System.Windows.Controls.Primitives.ToggleButton tButton, bool checkButton = false)
+        {
+            MessageBox.Show("do_btn_WebServer_Click - isChecked: " + tButton.IsChecked);
+
+            if (checkButton) tButton.IsChecked = true;
+
             if (tButton.IsChecked ?? false)
             {
+                MessageBox.Show("do_btn_WebServer_Click - set BorderThickness");
                 tButton.BorderThickness = new Thickness(4, 4, 4, 4);
                 tButton.Padding = new Thickness(4, 4, 4, 4);
                 btnWebServerLabel2.Content = "Stop";
@@ -1375,6 +1388,8 @@ namespace psx_cpl
             }
             else
             {
+                MessageBox.Show("do_btn_WebServer_Click - set BorderThickness 2");
+
                 tButton.BorderThickness = new Thickness(1, 1, 1, 1);
                 tButton.Padding = new Thickness(0, 0, 0, 0);
                 btnWebServerLabel2.Content = "Start";
@@ -1382,10 +1397,15 @@ namespace psx_cpl
                 StopWebServer();
             }
         }
-
-        private void btn_ElfLoaderServer_Click(object sender, RoutedEventArgs e)
+        private void btn_WebServer_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.Primitives.ToggleButton tButton = sender as System.Windows.Controls.Primitives.ToggleButton;
+            do_btn_WebServer_Click(tButton);
+        }
+
+        public void do_btn_ElfLoaderServer_Click(System.Windows.Controls.Primitives.ToggleButton tButton, bool checkButton = false)
+        {
+            if (checkButton) tButton.IsChecked = true;
 
             if (tButton.IsChecked ?? false)
             {
@@ -1403,6 +1423,11 @@ namespace psx_cpl
 
                 StopElfLoaderWebServer();
             }
+        }
+        private void btn_ElfLoaderServer_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.Primitives.ToggleButton tButton = sender as System.Windows.Controls.Primitives.ToggleButton;
+            do_btn_ElfLoaderServer_Click(tButton);
         }
 
         private void btnInfo_Click(object sender, RoutedEventArgs e)
