@@ -1374,7 +1374,6 @@ namespace psx_cpl
 
             if (tButton.IsChecked ?? false)
             {
-                MessageBox.Show("do_btn_WebServer_Click - set BorderThickness");
                 tButton.BorderThickness = new Thickness(4, 4, 4, 4);
                 tButton.Padding = new Thickness(4, 4, 4, 4);
                 btnWebServerLabel2.Content = "Stop";
@@ -1383,8 +1382,6 @@ namespace psx_cpl
             }
             else
             {
-                MessageBox.Show("do_btn_WebServer_Click - set BorderThickness 2");
-
                 tButton.BorderThickness = new Thickness(1, 1, 1, 1);
                 tButton.Padding = new Thickness(0, 0, 0, 0);
                 btnWebServerLabel2.Content = "Start";
