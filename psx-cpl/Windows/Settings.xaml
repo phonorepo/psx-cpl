@@ -245,23 +245,42 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <Label Name="lblAutoStartCol1" Grid.Row="0"  Grid.Column="0" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Enabled</Label>
                         <Label Name="lblAutostartCol2" Grid.Row="0"  Grid.Column="1" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center">Setting</Label>
 
-                        <CheckBox Grid.Row="1" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenLogAfterStart" IsChecked="{Binding Path=AppSettings.OpenLogAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <CheckBox Grid.Row="1" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartDNS" IsChecked="{Binding Path=AppSettings.AutoStartDNS, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
                         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                            <Label>Auto Start DNS Server</Label>
+                            <Label FontSize="8">(requires preconfigured fixed LocalIP in General tab)</Label>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartWebServer" IsChecked="{Binding Path=AppSettings.AutoStartWebServer, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                            <Label>AutoStart Web Server</Label>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="3" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartElfloaderWebServer" IsChecked="{Binding Path=AppSettings.AutoStartElfloaderWebServer, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+                            <Label>AutoStart Elfloader Web Server</Label>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="4" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenLogAfterStart" IsChecked="{Binding Path=AppSettings.OpenLogAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical">
                             <Label>OpenLogAfterStart</Label>
                         </StackPanel>
 
-                        <CheckBox Grid.Row="2" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenElfloaderLogAfterStart" IsChecked="{Binding Path=AppSettings.OpenElfloaderLogAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
-                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                        <CheckBox Grid.Row="5" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenElfloaderLogAfterStart" IsChecked="{Binding Path=AppSettings.OpenElfloaderLogAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Vertical">
                             <Label>OpenElfloaderLogAfterStart</Label>
                         </StackPanel>
 
-                        <CheckBox Grid.Row="3" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenProxyDumpAfterStart" IsChecked="{Binding Path=AppSettings.OpenProxyDumpAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
-                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical">
+                        <CheckBox Grid.Row="6" Grid.Column="0" Margin="10" x:Name="checkBoxAutoStartOpenProxyDumpAfterStart" IsChecked="{Binding Path=AppSettings.OpenProxyDumpAfterStart, Mode=TwoWay}" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"></CheckBox>
+                        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Vertical">
                             <Label>OpenProxyDumpAfterStart</Label>
                         </StackPanel>
 
@@ -282,3 +301,4 @@
         </StackPanel>
     </Grid>
 </Window>
+
