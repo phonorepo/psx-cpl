@@ -1343,6 +1343,7 @@ namespace psx_cpl
                 }
                 else if(string.IsNullOrEmpty(Instance.comboBoxLocalIP.Text))
                 {
+                    tButton.IsChecked = false;
                     MessageBox.Show(ErrorTag + " Couldn't get your local IP from the dropdown.");
                 }
             }
