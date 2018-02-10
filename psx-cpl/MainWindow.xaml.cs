@@ -1332,8 +1332,6 @@ namespace psx_cpl
 
         public void do_btn_DNSServer_Click(System.Windows.Controls.Primitives.ToggleButton tButton, bool checkButton = false)
         {
-            MessageBox.Show("do_btn_DNSServer_Click - isChecked: " + tButton.IsChecked);
-
             if (checkButton) tButton.IsChecked = true;
 
             if (tButton.IsChecked ?? false)
@@ -1366,15 +1364,12 @@ namespace psx_cpl
         private void btn_DNSServer_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.Primitives.ToggleButton tButton = sender as System.Windows.Controls.Primitives.ToggleButton;
-
             do_btn_DNSServer_Click(tButton);
 
         }
 
         public void do_btn_WebServer_Click(System.Windows.Controls.Primitives.ToggleButton tButton, bool checkButton = false)
         {
-            MessageBox.Show("do_btn_WebServer_Click - isChecked: " + tButton.IsChecked);
-
             if (checkButton) tButton.IsChecked = true;
 
             if (tButton.IsChecked ?? false)
